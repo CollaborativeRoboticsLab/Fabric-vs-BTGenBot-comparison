@@ -1,1 +1,1 @@
-"""The behavior tree represents a robot's navigation system. The robot must visit the location "StationA", "StationE", "StationF", "StationD" in order. If "StationE" cannot be reached, move to "StationB". If "StationF" cannot be reached, move to "StationC". actions that must be used in the behavior tree are: "MoveTo"."""
+"move to (2.0, -0.5), (1.0, 3.0), (-3.0, -1.0), (0.0, -2.0) in order. If (1.0, 3.0) cannot be reached, move to (0.0, 2.0). If (-3.0, -1.0) cannot be reached, move to (-2.0, 0.0) position"

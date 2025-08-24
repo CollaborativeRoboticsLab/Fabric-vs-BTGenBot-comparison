@@ -5,7 +5,7 @@ from file_save import save_output_to_file
 import time
 
 client = OpenAI()
-MODEL = "gpt-4o"  # You can switch to "gpt-4.1" or "o4-mini" if you have access
+MODEL = "gpt-5"  # You can switch to "gpt-4.1" or "o4-mini" if you have access
 
 # List of test files from tasks folder
 test_file_list = [

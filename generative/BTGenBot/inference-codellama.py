@@ -4,9 +4,11 @@ import torch, accelerate
 import os
 from file_save import save_output_to_file
 import time
+from huggingface_hub import login
 
 # Load Hugging Face token from environment variable
 hf_token = os.getenv("HUGGINGFACE_API_KEY")
+login(token=hf_token)
 
 # List of test files from tasks folder
 test_file_list = [

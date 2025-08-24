@@ -1,14 +1,11 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-from peft import PeftModel
-import torch, accelerate
-import os
+# Set up the OpenAI client (requires OPENAI_API_KEY in your environment)
+from openai import OpenAI
+import sys
 from file_save import save_output_to_file
 import time
-from huggingface_hub import login
 
-# Load Hugging Face token from environment variable
-hf_token = os.getenv("HUGGINGFACE_API_KEY")
-login(token=hf_token)
+client = OpenAI()
+MODEL = "gpt-4.1"  # You can switch to "gpt-4.1" or "o4-mini" if you have access
 
 # List of test files from tasks folder
 test_file_list = [
@@ -19,35 +16,6 @@ test_file_list = [
     "generative_4.txt",
     "generative_5.txt",
 ]
-
-if hf_token:
-    print("Hugging Face token loaded successfully from environment variable.")
-else:
-    print("HF_TOKEN environment variable is not set.")
-
-# Models path
-model_id = 'codellama/CodeLlama-7b-Instruct-hf'
-
-# Adapters path
-adapter_id = 'AIRLab-POLIMI/codellama-7b-instruct-hf-btgenbot-adapter'
-
-# Load quantization configuration
-quantization_config = BitsAndBytesConfig(load_in_8bit=True)
-
-# Load tokenizer
-tokenizer = AutoTokenizer.from_pretrained(
-    pretrained_model_name_or_path = model_id,
-)
-
-# Load base model
-base_model = AutoModelForCausalLM.from_pretrained(
-    pretrained_model_name_or_path = model_id,
-    quantization_config = quantization_config,
-    torch_dtype = torch.float16,
-    device_map = "auto",
-    trust_remote_code = True,
-    token = hf_token,  # Use the token if available
-)
 
 # Define the context for the task
 context1 =  """Build a xml plan based on the availbale capabilities to acheive mentioned task of """
@@ -95,15 +63,33 @@ example_output = """
   </Plan>'"
 """
 
-## load base model
-base_model.eval()
+def generate_bt_with_openai(context: str, task: str, example_task: str | None = None, example_output: str | None = None, model: str = MODEL) -> str:
+    """Generate a behavior tree XML using the OpenAI Responses API.
 
-# Load fine-tuned model
-finetuned_model = PeftModel.from_pretrained(base_model, adapter_id, token=hf_token)
-finetuned_model = finetuned_model.merge_and_unload()
-finetuned_model.eval()
+    Returns the raw text response (we'll regex out the <root>...</root> block next).
+    """
+    messages = []
+    if context and context.strip():
+        messages.append({ "role": "system", "content": context.strip() })
 
-# Iterate through each task file
+    # One-shot example, if provided
+    if example_task and example_output:
+        messages.append({ "role": "user", "content": example_task.strip() })
+        messages.append({ "role": "assistant", "content": example_output.strip() })
+
+    messages.append({ "role": "user", "content": task.strip() })
+
+    # Use the Responses API for text output
+    resp = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        temperature=0.2,
+    )
+    print("Prompt used: ")
+    print(messages)
+
+    return resp.choices[0].message.content
+
 for name in test_file_list:
     print(f"\nRunning inference on task file: {name}")
     task_filename = f"tasks/{name}"
@@ -111,65 +97,29 @@ for name in test_file_list:
     # load task from the text file
     with open(task_filename, "r") as file:
         task = file.read().strip()
-
-    # zero-shot prompt
-    zero_eval_prompt = context1 + task + context2
-    zero_model_input = tokenizer(zero_eval_prompt, return_tensors="pt").to("cuda")
-
-    # one-shot prompt
-    one_eval_prompt = context1 + task + context2 + example_task + example_output
-    one_model_input = tokenizer(one_eval_prompt, return_tensors="pt").to("cuda")
-
-
-    ## print task
-    print("Task:")
-    print(task)
-
-    print("\n zero-shot prompt:")
-    print(zero_eval_prompt)
-
-    print("\n one-shot prompt:")
-    print(one_eval_prompt)
+        context = context1 + task + context2
 
     for it in range(1, 11): # 10 iterations
-        print(f"\nIteration {it}:")
+        print(f"\nIteration {it} on openai-{MODEL}:")
 
-        # Evaluate zero-shot with base model
-        with torch.no_grad():
-            start1 = time.time()
-            result = tokenizer.decode(base_model.generate(**zero_model_input, max_new_tokens=1000)[0], skip_special_tokens=True)
-            end1 = time.time()
-            print(f"\nZero-shot base model result (time: {end1 - start1:.2f} seconds):")
-            print("Zero-shot base model result:")
-            print(result)
-            save_output_to_file("codellama-base", "zero", task_filename, it, result)
+        ## print task
+        print("Task:")
+        print(task)
 
-        ## Evaluate one-shot with base model
-        with torch.no_grad():
-            start2 = time.time()
-            result = tokenizer.decode(base_model.generate(**one_model_input, max_new_tokens=1000)[0], skip_special_tokens=True)
-            end2 = time.time()
-            print(f"\nOne-shot base model result (time: {end2 - start2:.2f} seconds):")
-            print("One-shot base model result:")
-            print(result)
-            save_output_to_file("codellama-base", "one", task_filename, it, result)
+        # Generate the behavior tree XML using OpenAI using the zero-shot approach
+        start1 = time.time()
+        result = generate_bt_with_openai(context, task)
+        end1 = time.time()
+        print(f"\nZero-shot OpenAI result (time: {end1 - start1:.2f} seconds):")
+        print("Zero-shot OpenAI result:")
+        print(result)
+        save_output_to_file("openai-{MODEL}", "zero", task_filename, it, result)
 
-        # Evaluate zero-shot with finetuned model
-        with torch.no_grad():
-            start3 = time.time()
-            result = tokenizer.decode(finetuned_model.generate(**zero_model_input, max_new_tokens=1000)[0], skip_special_tokens=True)
-            end3 = time.time()
-            print(f"\nZero-shot finetuned model result (time: {end3 - start3:.2f} seconds):")
-            print("Zero-shot finetuned model result:")
-            print(result)
-            save_output_to_file("codellama-finetuned", "zero", task_filename, it, result)
-
-        # Evaluate oneshot with finetuned model
-        with torch.no_grad():
-            start4 = time.time()
-            result = tokenizer.decode(finetuned_model.generate(**one_model_input, max_new_tokens=1000)[0], skip_special_tokens=True)
-            end4 = time.time()
-            print(f"\nOne-shot finetuned model result (time: {end4 - start4:.2f} seconds):")
-            print("One-shot finetuned model result:")
-            print(result)
-            save_output_to_file("codellama-finetuned", "one", task_filename, it, result)
+        # Generate the behavior tree XML using OpenAI using the one-shot approach
+        start2 = time.time()
+        result = generate_bt_with_openai(context, task, example_task, example_output)
+        end2 = time.time()
+        print(f"\nOne-shot OpenAI result (time: {end2 - start2:.2f} seconds):")
+        print("One-shot OpenAI result:")
+        print(result)
+        save_output_to_file("openai-{MODEL}", "one", task_filename, it, result)
