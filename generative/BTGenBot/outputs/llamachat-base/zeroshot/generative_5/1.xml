@@ -1,0 +1,56 @@
+<root main_tree_to_execute="MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <!-- StationA, StationE, StationF, StationD in order -->
+            <Fallback>
+                <Sequence>
+                    <GetPoseFromPoint position="2.7;-3.4;0.7" />
+                </Sequence>
+                <ForceFailure>
+                    <Sequence>
+                        <GetPoseFromPoint position="0;0;0" />
+                    </Sequence>
+                </ForceFailure>
+            </Fallback>
+            
+            <Fallback>
+                <Sequence>
+                    <GetPoseFromPoint position="0;-3.4;0.7" />
+                </Sequence>
+                <ForceFailure>
+                    <Sequence>
+                        <GetPoseFromPoint position="2.7;0;0" />
+                    </Sequence>
+                </ForceFailure>
+            </Fallback>
+            
+            <Fallback>
+                <Sequence>
+                    <GetPoseFromPoint position="-3.4;0;0" />
+                </Sequence>
+                <ForceFailure>
+                    <Sequence>
+                        <GetPoseFromPoint position="2.7;-3.4;0.7" />
+                    </Sequence>
+                </ForceFailure>
+            </Fallback>
+            
+            <Fallback>
+                <Sequence>
+                    <GetPoseFromPoint position="-3.4;-3.4;0" />
+                </Sequence>
+                <ForceFailure>
+                    <Sequence>
+                        <GetPoseFromPoint position="2.7;-3.4;0.7" />
+                    </Sequence>
+                </ForceFailure>
+            </Fallback>
+        </Sequence>
+    </BehaviorTree>
+
+    <TreeNodesModel>
+        <Action ID="MoveTo">
+            <input_port name="position"/>
+        </Action>
+    </TreeNodesModel>
+</root>

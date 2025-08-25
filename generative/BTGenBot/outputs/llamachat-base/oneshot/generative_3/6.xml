@@ -1,0 +1,12 @@
+<root main_tree_to_execute = "MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <MoveTo location="StationA"/>
+            <MoveTo location="StationE"/>
+            <MoveTo location="StationC"/>
+            <MoveTo location="StationD"/>
+            <IfActionAroundAction current_action="StationE" key_name="station_e_not_reached_threshold" value="false" ID="IsNotReachedAroundStationE"/>
+            <MoveTo location="StationB"/>
+        </Sequence>
+    </BehaviorTree>
+</root>

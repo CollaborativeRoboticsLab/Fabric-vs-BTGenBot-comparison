@@ -1,0 +1,38 @@
+<root main_tree_to_execute = "MainTree" >
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <Fallback>
+                <SubTree ID="StationA" />
+                <ForceSuccess>
+                    <SubTree ID="StationB" />
+                </ForceSuccess>
+            </Fallback>
+            <Fallback>
+                <SubTree ID="StationE" />
+                <ForceSuccess>
+                    <SubTree ID="StationC" />
+                </ForceSuccess>
+            </Fallback>
+            <Fallback>
+                <SubTree ID="StationF" />
+                <ForceSuccess>
+                    <SubTree ID="StationC" />
+                </ForceSuccess>
+            </Fallback>
+            <Fallback>
+                <SubTree ID="StationD" />
+                <ForceSuccess>
+                    <SubTree ID="StationC" />
+                </ForceSuccess>
+            </Fallback>
+            <SubTree ID="StationA" />
+            <SubTree ID="StationB" />
+            <SubTree ID="StationC" />
+            <SubTree ID="StationD" />
+            <SubTree ID="StationE" />
+            <SubTree ID="StationF" />
+
+            <AlwaysSuccess />
+        </Sequence>
+    </BehaviorTree>
+</root>

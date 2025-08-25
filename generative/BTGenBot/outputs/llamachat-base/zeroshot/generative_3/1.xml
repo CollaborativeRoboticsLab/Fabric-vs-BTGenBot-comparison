@@ -1,0 +1,24 @@
+<root main_tree_to_execute="MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+           ; Visit StationA
+            <VisitLocation goal="StationA" />
+            
+            ; Visit StationE if possible, otherwise go to StationB
+            <Fallback>
+                <Sequence>
+                    <VisitLocation goal="StationE" />
+                </Sequence>
+                <Sequence>
+                    <MoveTo goal="StationB" />
+                </Sequence>
+            </Fallback>
+            
+            ; Visit StationC
+            <VisitLocation goal="StationC" />
+            
+            ; Visit StationD
+            <VisitLocation goal="StationD" />
+        </Sequence>
+    </BehaviorTree>
+</root>

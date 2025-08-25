@@ -1,0 +1,8 @@
+<root main_tree_to_execute="MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <FindPoseAction  name="FindPose" goal="StationA" x_coordinate="0.0" y_coordinate="0.0" z_coordinate="0.0"/>
+            <MoveToAction    name="MoveTo" goal="StationA" distance="5.0"/>
+        </Sequence>
+    </BehaviorTree>
+</root>

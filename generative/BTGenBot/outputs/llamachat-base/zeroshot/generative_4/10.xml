@@ -1,0 +1,30 @@
+<root main_tree_to_execute="MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+           ; Visit StationA
+            <CheckBlackboard input="{StationA}" compare_to="StationA"/>
+            <MoveTo goal="{StationA}"/>
+            
+            ; Visit StationE
+            <CheckBlackboard input="{StationE}" compare_to="StationE"/>
+            <CheckBlackboard condition="notReached" key="notReached"/>
+            <Fallback>
+                <Sequence>
+                    <MoveTo goal="{StationE}"/>
+                    <SetBlackboard output="{notReached}" value="true"/>
+                </Sequence>
+                <Sequence>
+                    <MoveTo goal="{StationF}"/>
+                </Sequence>
+            </Fallback>
+            
+            ; Visit StationF
+            <CheckBlackboard input="{StationF}" compare_to="StationF"/>
+            <MoveTo goal="{StationF}"/>
+            
+            ; Visit StationD
+            <CheckBlackboard input="{StationD}" compare_to="StationD"/>
+            <MoveTo goal="{StationD}"/>
+        </Sequence>
+    </BehaviorTree>
+</root>

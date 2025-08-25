@@ -1,0 +1,17 @@
+<root main_tree_to_execute = "MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <MoveTo location="StationA"/>
+            <MoveTo location="StationE"/>
+            <IfConditionNode name="StationE_Reached_Check">
+                <StringParameterNode name="station_e_value" default="0">StationE is not reached, move to an alternative location</stringparameternode>
+                <MoveTo location="${station_e_value}"/>
+            </IfConditionNode>
+            <MoveTo location="StationF"/>
+            <Fallback>
+                <MoveTo location="StationC"/>
+            </Fallback>
+            <MoveTo location="StationD"/>
+        </Sequence>
+    </BehaviorTree>
+</root>

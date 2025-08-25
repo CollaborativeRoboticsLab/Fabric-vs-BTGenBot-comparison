@@ -1,0 +1,65 @@
+<root main_tree_to_execute = "MainTree" >
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <Fallback name="root_Fallback">
+                <Sequence name="station_A_and_B">
+                    <SubTree ID="StationA" />
+                    <SubTree ID="StationB" />
+                </Sequence>
+                <Sequence name="station_E_and_C">
+                    <SubTree ID="StationE" />
+                    <SubTree ID="StationC" />
+                </Sequence>
+                <Sequence name="station_F_and_D">
+                    <SubTree ID="StationF" />
+                    <SubTree ID="StationD" />
+                </Sequence>
+            </Fallback>
+        </Sequence>
+    </BehaviorTree>
+    <BehaviorTree ID="StationA">
+        <Fallback name="station_A_Fallback">
+            <Action ID="MoveTo" goal="1" />
+            <Action ID="MoveTo" goal="2" />
+            <Action ID="MoveTo" goal="3" />
+            <ForceFailure>
+                <Action ID="MoveTo" goal="4" />
+            </ForceFailure>
+        </Fallback>
+    </BehaviorTree>
+    <BehaviorTree ID="StationB">
+        <Fallback name="station_B_Fallback">
+            <Action ID="MoveTo" goal="4" />
+            <Action ID="MoveTo" goal="3" />
+            <Action ID="MoveTo" goal="2" />
+            <ForceFailure>
+                <Action ID="MoveTo" goal="1" />
+            </ForceFailure>
+        </Fallback>
+    </BehaviorTree>
+    <BehaviorTree ID="StationC">
+        <Fallback name="station_C_Fallback">
+            <Action ID="MoveTo" goal="3" />
+            <Action ID="MoveTo" goal="2" />
+            <Action ID="MoveTo" goal="1" />
+            <ForceFailure>
+                <Action ID="MoveTo" goal="4" />
+            </ForceFailure>
+        </Fallback>
+    </BehaviorTree>
+    <BehaviorTree ID="StationD">
+        <Fallback name="station_D_Fallback">
+            <Action ID="MoveTo" goal="4" />
+            <Action ID="MoveTo" goal="3" />
+            <Action ID="MoveTo" goal="2" />
+            <ForceFailure>
+                <Action ID="MoveTo" goal="1" />
+            </ForceFailure>
+        </Fallback>
+    </BehaviorTree>
+    <TreeNodesModel>
+        <Action ID="MoveTo">
+            <input_port name="goal"/>
+        </Action>
+    </TreeNodesModel>
+</root>

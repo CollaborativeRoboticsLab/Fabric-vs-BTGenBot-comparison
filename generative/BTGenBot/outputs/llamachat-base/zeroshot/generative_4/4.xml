@@ -1,0 +1,77 @@
+<root main_tree_to_execute="MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+           ; Visit StationA
+            <Repeat num_cycles="1">
+                <Sequence>
+                    <SubTree ID="StationA" />
+                </Sequence>
+            </Repeat>
+            
+            ; Visit StationE
+            <Repeat num_cycles="1">
+                <Sequence>
+                    <Fallback>
+                        <Condition ID="IsAtStationE" />
+                        <Action ID="MoveTo" action_name="MoveTo" target_pose="{station_e}" />
+                    </Fallback>
+                    <SubTree ID="StationE" />
+                </Sequence>
+            </Repeat>
+
+            ; Visit StationF
+            <Repeat num_cycles="1">
+                <Sequence>
+                    <SubTree ID="StationF" />
+                </Sequence>
+            </Repeat>
+
+            ; Visit StationD
+            <SubTree ID="StationD" />
+            
+            ; If StationE cannot be reached, go to StationB
+            <Fallback>
+                <Condition ID="IsAtStationE" />
+                <Action ID="MoveTo" action_name="MoveTo" target_pose="{station_b}" />
+            </Fallback>
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="StationA">
+        <Sequence>
+            <SubTree ID="StationB" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="StationB">
+        <Sequence>
+            <SubTree ID="StationC" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="StationC">
+        <Sequence>
+            <SubTree ID="StationD" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="StationD">
+        <Sequence>
+            <SubTree ID="StationE" />
+        </Sequence>
+    </BehaviorTree>
+
+    <TreeNodesModel>
+        <Action ID="MoveTo">
+            <input_port name="action_name"/>
+            <input_port name="target_pose"/>
+        </Action>
+        <Condition ID="IsAtStationE"/>
+        <SubTree ID="StationA"/>
+        <SubTree ID="StationB"/>
+        <SubTree ID="StationC"/>
+        <SubTree ID="StationD"/>
+        <SubTree ID="StationE"/>
+        <SubTree ID="StationF"/>
+    </TreeNodesModel>
+</root>

@@ -1,0 +1,30 @@
+<root main_tree_to_execute="MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+           ; Visit StationA
+            <CheckBlackboard input="StationA" compare_to=""/>
+            <MoveTo goal="StationA"/>
+            
+            ; Visit StationE if possible, otherwise go to StationB
+            <CheckBlackboard input="StationE" compare_to="" fallback_action="MoveTo StationC"/>
+            <CheckReady/>
+            <MoveTo goal="StationE"/>
+            if (not IsReachable(goal="StationE"))>
+                <MoveTo goal="StationB"/>
+            </if>
+            
+            ; Visit StationF if possible, otherwise go to StationC
+            <CheckBlackboard input="StationF" compare_to="" fallback_action="MoveTo StationC"/>
+            <CheckReady/>
+            <MoveTo goal="StationF"/>
+            if (not IsReachable(goal="StationF"))>
+                <MoveTo goal="StationC"/>
+            </if>
+            
+            ; Visit StationD
+            <CheckBlackboard input="StationD" compare_to=""/>
+            <MoveTo goal="StationD"/>
+            
+        </Sequence>
+    </BehaviorTree>
+</root>

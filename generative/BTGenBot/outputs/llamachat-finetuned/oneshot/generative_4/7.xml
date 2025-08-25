@@ -1,0 +1,14 @@
+<root main_tree_to_execute = "MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <MoveTo location="StationA"/>
+            <MoveTo location="StationE"/>
+            <IfAction potential_arm_status="{arm_status}" action="ArmDown" value="arm_status" ID="IsArmDown"/>
+            <IfAction potential_arm_status="{arm_status}" action="ArmRise" value="arm_status" ID="IsArmRise"/>
+            <MoveTo location="StationF"/>
+            <IfAction potential_arm_status="{arm_status}" action="ArmDown" value="arm_status" ID="IsArmDown"/>
+            <IfAction potential_arm_status="{arm_status}" action="ArmRise" value="arm_status" ID="IsArmRise"/>
+            <MoveTo location="StationD"/>
+        </Sequence>
+    </BehaviorTree>
+</root>

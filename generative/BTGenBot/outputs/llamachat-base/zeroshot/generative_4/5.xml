@@ -1,0 +1,19 @@
+<root main_tree_to_execute="MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+           ; Visit StationA, StationE, StationF, StationD in sequence
+            <Switch2 case_1="StationA" case_2="StationE" case_3="StationF" case_4="StationD" name="CompareInts">
+                <Condition ID="BellowInt" value="0" />
+                <Action ID="MoveTo" goal="1" />
+            </Switch2>
+            <Switch2 case_1="StationE" case_2="StationF" case_3="StationD" case_4="StationB" name="CompareInts">
+                <Condition ID="AboveInt" value="0" />
+                <Action ID="MoveTo" goal="2" />
+            </Switch2>
+            <Switch2 case_1="StationF" case_2="StationC" case_3="StationA" case_4="StationE" case_5="StationD" name="CompareInts">
+                <Condition ID="BellowInt" value="0" />
+                <Action ID="MoveTo" goal="3" />
+            </Switch2>
+        </Sequence>
+    </BehaviorTree>
+</root>

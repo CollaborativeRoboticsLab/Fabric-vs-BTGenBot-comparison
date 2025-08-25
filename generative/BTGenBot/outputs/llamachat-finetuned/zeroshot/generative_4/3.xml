@@ -1,0 +1,66 @@
+<root main_tree_to_execute = "MainTree" >
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <!-- StationA, StationE, StationF, StationD in sequence -->
+            <SubTree ID="StationA" />
+            <SubTree ID="StationE" /> (if StationE cannot be reached -> StationB) />
+            <SubTree ID="StationF" /> (if StationF cannot be reached -> StationC) />
+            <SubTree ID="StationD" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="StationA">
+        <Sequence>
+            <Action ID="MoveTo" goal="StationA" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="StationB">
+        <Sequence>
+            <Action ID="MoveTo" goal="StationB" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="StationC">
+        <Sequence>
+            <Action ID="MoveTo" goal="StationC" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="StationD">
+        <Sequence>
+            <Action ID="MoveTo" goal="StationD" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="StationE">
+        <Sequence>
+            <Fallback>
+                <Sequence>
+                    <Action ID="MoveTo" goal="StationE" />
+                </Sequence>
+                <Sequence>
+                    <Action ID="MoveTo" goal="StationB" />
+                </Sequence>
+            </Fallback>
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="StationF">
+        <Sequence>
+            <Action ID="MoveTo" goal="StationF" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="SubTree">
+        <Sequence>
+            <Action ID="MoveTo" goal="{target}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <TreeNodesModel>
+        <Action ID="MoveTo">
+            <input_port name="goal"/>
+        </Action>
+    </TreeNodesModel>
+</root>

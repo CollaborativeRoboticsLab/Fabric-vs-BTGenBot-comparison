@@ -1,0 +1,20 @@
+<root main_tree_to_execute="MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+           ; Visit Stations in order
+            <ForceSuccess>
+                <Sequence>
+                    <Action ID="MoveTo" goal="StationA" />
+                    <Action ID="MoveTo" goal="StationE" />
+                    <Action ID="MoveTo" goal="StationC" />
+                    <Action ID="MoveTo" goal="StationD" />
+                </Sequence>
+            </ForceSuccess>
+            <ForceSuccess>
+                <Sequence>
+                    <Action ID="MoveTo" goal="StationB" />
+                </Sequence>
+            </ForceSuccess>
+        </Sequence>
+    </BehaviorTree>
+</root>

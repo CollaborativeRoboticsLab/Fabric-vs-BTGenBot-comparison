@@ -1,0 +1,19 @@
+<root main_tree_to_execute = "MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <MoveTo location="StationA"/>
+            <MoveTo location="StationE"/>
+            <MoveTo location="StationF"/>
+            <Fallback>
+                <MoveTo location="StationD"/>
+            </Fallback>
+            <Fallback>
+                <Sequence>
+                    <FollowAruco id="7"/>
+                    <MoveTo location="StationB"/>
+                </Sequence>
+                <MoveTo location="StationC"/>
+            </Fallback>
+        </Sequence>
+    </BehaviorTree>
+</root>

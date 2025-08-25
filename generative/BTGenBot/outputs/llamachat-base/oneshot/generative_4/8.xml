@@ -1,0 +1,13 @@
+<root main_tree_to_execute = "MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <MoveTo location="StationA"/>
+            <MoveTo location="StationE"/>
+            <IfCondition message="Can be reached?" key="NotReached"/>
+            <Fallback name="StationE not reached">
+                <MoveTo location="StationF"/>
+            </Fallback>
+            <MoveTo location="StationD"/>
+        </Sequence>
+    </BehaviorTree>
+</root>

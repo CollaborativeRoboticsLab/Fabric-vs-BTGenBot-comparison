@@ -1,0 +1,54 @@
+<root main_tree_to_execute="MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+           ; Visit StationA
+            <CheckBlackboard input="{StationA}" compare_to="StationA"/>
+            <MoveTo goal="{StationA}"/>
+            
+            ; Visit StationE
+            <CheckBlackboard input="{StationE}" compare_to="StationE"/>
+            <CheckBlackboard condition="NoNo" ID="NoNo"/>
+            <MoveTo goal="{StationE}"/>
+            
+            ; Visit StationF
+            <CheckBlackboard input="{StationF}" compare_to="StationF"/>
+            <CheckBlackboard condition="NoNo" ID="NoNo"/>
+            <MoveTo goal="{StationF}"/>
+            
+            ; Visit StationD
+            <CheckBlackboard input="{StationD}" compare_to="StationD"/>
+            <MoveTo goal="{StationD}"/>
+            
+            ; If StationE cannot be reached
+            <CheckBlackboard condition="Reached" ID="Reached"/>
+            <SubTree ID="StationESubTree" />
+            
+            ; If StationF cannot be reached
+            <CheckBlackboard condition="Reached" ID="Reached"/>
+            <SubTree ID="StationFSubTree" />
+            
+        </Sequence>
+    </BehaviorTree>
+    
+    <BehaviorTree ID="StationESubTree">
+        <Sequence>
+            ; Move to StationB
+            <MoveTo goal="{StationB}" />
+        </Sequence>
+    </BehaviorTree>
+    
+    <BehaviorTree ID="StationFSubTree">
+        <Sequence>
+            ; Move to StationC
+            <MoveTo goal="{StationC}" />
+        </Sequence>
+    </BehaviorTree>
+    
+    <TreeNodesModel>
+        <SubTree ID="StationESubTree"/>
+        <SubTree ID="StationFSubTree"/>
+        <Action ID="MoveTo">
+            <input_port name="goal"/>
+        </Action>
+    </TreeNodesModel>
+</root>

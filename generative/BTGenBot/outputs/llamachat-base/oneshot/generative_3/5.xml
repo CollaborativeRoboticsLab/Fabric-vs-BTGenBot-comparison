@@ -1,0 +1,19 @@
+<root main_tree_to_execute = "MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <MoveTo location="StationA"/>
+            <MoveTo location="StationE"/>
+            <IfThenElse>
+                <FollowAruco id="1"/>
+                <FollowAruco id="7"/>
+                <FollowAruco id="6"/>
+            </IfThenElse>
+            <MoveTo location="StationC"/>
+            <MoveTo location="StationD"/>
+            <IfThenElse>
+                <FollowAruco id="6"/>
+                <FollowAruco id="7"/>
+            </IfThenElse>
+        </Sequence>
+    </BehaviorTree>
+</root>

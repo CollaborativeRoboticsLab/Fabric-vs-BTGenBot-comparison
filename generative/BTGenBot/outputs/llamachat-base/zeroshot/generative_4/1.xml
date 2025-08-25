@@ -1,0 +1,81 @@
+<root main_tree_to_execute="MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+           ; Visit StationA
+            <Repeat num_cycles="1">
+                <Sequence>
+                    <SubTree ID="StationCToStationA" />
+                </Sequence>
+            </Repeat>
+            
+            ; Visit StationE
+            <Repeat num_cycles="1">
+                <Sequence>
+                    <Fallback>
+                        <Action ID="MoveTo" goal="StationE" />
+                        <Action ID="MoveTo" goal="StationB" />
+                    </Fallback>
+                    <SubTree ID="StationAtoStationE" />
+                </Sequence>
+            </Repeat>
+            
+            ; Visit StationF
+            <Repeat num_cycles="1">
+                <Sequence>
+                    <Fallback>
+                        <Action ID="MoveTo" goal="StationF" />
+                        <Action ID="MoveTo" goal="StationC" />
+                    </Fallback>
+                    <SubTree ID="StationAtoStationF" />
+                </Sequence>
+            </Repeat>
+            
+            ; Visit StationD
+            <Sequence>
+                <SubTree ID="StationCToStationD" />
+            </Sequence>
+        </Sequence>
+    </BehaviorTree>
+    
+    <BehaviorTree ID="StationAtoStationE">
+        <Sequence>
+            <Action ID="MoveTo" goal="StationE" />
+        </Sequence>
+    </BehaviorTree>
+    
+    <BehaviorTree ID="StationAtoStationF">
+        <Sequence>
+            <Action ID="MoveTo" goal="StationF" />
+        </Sequence>
+    </BehaviorTree>
+    
+    <BehaviorTree ID="StationCToStationA">
+        <Sequence>
+            <Action ID="MoveTo" goal="StationA" />
+        </Sequence>
+    </BehaviorTree>
+    
+    <BehaviorTree ID="StationCToStationD">
+        <Sequence>
+            <Action ID="MoveTo" goal="StationD" />
+        </Sequence>
+    </BehaviorTree>
+    
+    <BehaviorTree ID="StationCToStationE">
+        <Sequence>
+            <Action ID="MoveTo" goal="StationE" />
+        </Sequence>
+    </BehaviorTree>
+    
+    <BehaviorTree ID="StationCToStationF">
+        <Sequence>
+            <Action ID="MoveTo" goal="StationF" />
+        </Sequence>
+    </BehaviorTree>
+    
+    <TreeNodesModel>
+        <Action ID="MoveTo">
+            <input_port name="goal"/>
+        </Action>
+    </TreeNodesModel>
+</root>

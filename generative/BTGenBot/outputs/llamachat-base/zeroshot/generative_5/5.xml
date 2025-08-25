@@ -1,0 +1,57 @@
+<root main_tree_to_execute = "MainTree" >
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <!-- StationA, StationE, StationF, StationD in order -->
+            <Fallback>
+                <Sequence>
+                    <GetPoseFrom pose_lr="StationA" x_required="true" y_required="true" />
+                </Sequence>
+                <Sequence>
+                    <GetPoseFrom pose_lr="StationB" x_required="true" y_required="true" />
+                </Sequence>
+                <Sequence>
+                    <GetPoseFrom pose_lr="StationD" x_required="true" y_required="true" />
+                </Sequence>
+                <Sequence>
+                    <GetPoseFrom pose_lr="StationF" x_required="true" y_required="true" />
+                </Sequence>
+            </Fallback>
+            <Sequence>
+                <Sequence>
+                    <GetPoseFrom pose_lr="StationE" x_required="true" y_required="true" />
+                </Sequence>
+                <Sequence>
+                    <GetPoseFrom pose_lr="StationF" x_required="true" y_required="true" />
+                </Sequence>
+                <Sequence>
+                    <GetPoseFrom pose_lr="StationD" x_required="true" y_required="true" />
+                </Sequence>
+                <Sequence>
+                    <GetPoseFrom pose_lr="StationA" x_required="true" y_required="true" />
+                </Sequence>
+            </Sequence>
+            <Sequence>
+                <Sequence>
+                    <GetPoseFrom pose_lr="StationE" x_required="true" y_required="true" />
+                </Sequence>
+                <Sequence>
+                    <GetPoseFrom pose_lr="StationF" x_required="true" y_required="true" />
+                </Sequence>
+                <Sequence>
+                    <GetPoseFrom pose_lr="StationD" x_required="true" y_required="true" />
+                </Sequence>
+                <Sequence>
+                    <GetPoseFrom pose_lr="StationC" x_required="true" y_required="true" />
+                </Sequence>
+            </Sequence>
+        </Sequence>
+    </BehaviorTree>
+
+    <TreeNodesModel>
+        <Action ID="MoveTo">
+            <input_port name="key_name">Pose or Location</input_port>
+            <input_port name="x_required">false or true</input_port>
+            <input_port name="y_required">false or true</input_port>
+        </Action>
+    </TreeNodesModel>
+</root>

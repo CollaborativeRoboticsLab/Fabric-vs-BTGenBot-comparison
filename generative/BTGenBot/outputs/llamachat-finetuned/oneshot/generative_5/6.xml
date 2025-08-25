@@ -1,0 +1,21 @@
+<root main_tree_to_execute = "MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <Fallback>
+                <Sequence>
+                    <MoveTo location="StationA"/>
+                </Sequence>
+                <Sequence>
+                    <MoveTo location="StationE"/>
+                </Sequence>
+                <Sequence>
+                    <MoveTo location="StationF"/>
+                </Sequence>
+                <Sequence>
+                    <MoveTo location="StationD"/>
+                </Sequence>
+                <MoveTo location="StationB"/>
+            </Fallback>
+        </Sequence>
+    </BehaviorTree>
+</root>

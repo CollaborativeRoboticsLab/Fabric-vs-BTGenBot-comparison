@@ -1,0 +1,33 @@
+<root main_tree_to_execute="MainTree">
+    <BehaviorTree ID="MainTree">
+        <Sequence>
+            <!-- Ping a server to check if the initial navigation to StationA has been received -->
+            <SetBlackboard output_key="station_a" value="-1;0;0;0;0;0;0;0;0;100" />
+            <Fallback>
+                <Sequence>
+                    <RemoveBlackboard output_key="station_a" />
+                    <Sequence>
+                        <MoveTo goal="StationA" />
+                    </Sequence>
+                </Sequence>
+                <Sequence>
+                    <MoveTo goal="StationE" />
+                    <Fallback>
+                        <Sequence>
+                            <MoveTo goal="StationB" />
+                            <Sequence>
+                                <MoveTo goal="StationA" />
+                                <MoveTo goal="StationE" />
+                            </Sequence>
+                        </Sequence>
+                        <MoveTo goal="StationE" />
+                    </Fallback>
+                </Sequence>
+                <Sequence>
+                    <MoveTo goal="StationC" />
+                    <MoveTo goal="StationD" />
+                </Sequence>
+            </Fallback>
+        </Sequence>
+    </BehaviorTree>
+</root>
