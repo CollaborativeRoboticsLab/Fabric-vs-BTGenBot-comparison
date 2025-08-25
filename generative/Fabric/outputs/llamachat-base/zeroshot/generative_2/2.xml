@@ -1,0 +1,3 @@
+<Plan ID="move_to_waypoint8">
+             <Action ID="7" name="move_base" node="move" x="${wp.x}" y="${wp.y}"/>
+             </Plan>

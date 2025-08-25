@@ -1,0 +1,62 @@
+<Plan> <Sequence> <RetryUntilSuccesful numAttempts='2' name='move to (2.0, -0.5)'>
+            <Sequence name='move to (1.0, 3.0)'>
+                <Sequence name='move to (-3.0, -1.0)'>
+                    <Sequence name='move to (0.0, -2.0)'>
+                        <Sequence name='move to (-2.0, 0.0)'>
+                            <Sequence name='move to (2.0, 2.0)'>
+                            </Sequence>
+                        </Sequence>
+                    </Sequence>
+                </Sequence>
+            </Sequence>
+            <Sequence name='move to (1.0, 3.0)'>
+            </Sequence>
+            <Sequence name='move to (-3.0, -1.0)'>
+            </Sequence>
+            <Sequence name='move to (-2.0, 0.0)'>
+            </Sequence>
+            <Sequence name='move to (0.0, -2.0)'>
+            </Sequence>
+            <Sequence name='move to (2.0, 2.0)'>
+            </Sequence>
+            </RetryUntilSuccesful>
+        </Sequence>
+        <Sequence>
+            <SubPlan ID='move_to_0_0_-2_0'>
+                <SubPlan ID='move_to_2_0_0'>
+                    <SubPlan ID='move_to_0_0_-2_0'>
+                        <Sequence name='move to (0.0, -2.0)'>
+                            <Action ID='move_to' x='0.0' y='-2.0' />
+                        </Sequence>
+                    </SubPlan>
+                </SubPlan>
+            </SubPlan>
+            <SubPlan ID='move_to_2_0_3'>
+                <SubPlan ID='move_to_3_0_0'>
+                    <Sequence name='move to (3.0, 0.0)'>
+                        <Action ID='move_to' x='3.0' y='0.0' />
+                    </Sequence>
+                </SubPlan>
+            </SubPlan>
+            <SubPlan ID='move_to_0_0_-3_0'>
+                <Sequence name='move to (0.0, -3.0)'>
+                    <Action ID='move_to' x='0.0' y='-3.0' />
+                </Sequence>
+            </SubPlan>
+            <SubPlan ID='move_to_3_0_0'>
+                <Sequence name='move to (3.0, 0.0)'>
+                    <Action ID='move_to' x='3.0' y='0.0' />
+                </Sequence>
+            </SubPlan>
+            <SubPlan ID='move_to_2_0_0'>
+                <Sequence name='move to (2.0, 0.0)'>
+                    <Action ID='move_to' x='2.0' y='0.0' />
+                </Sequence>
+            </SubPlan>
+            <SubPlan ID='move_to_0_0_-2_0'>
+                <Sequence name='move to (0.0, -2.0)'>
+                    <Action ID='move_to' x='0.0' y='-2.0' />
+                </Sequence>
+            </SubPlan>
+        </Sequence>
+    </Plan>

@@ -1,0 +1,10 @@
+<Plan>
+                <Sequence>
+                    <RetryUntilSuccesful numAttempts="20" untilSuccesful=""/>
+                    <SubTree ID="moveTo2" />
+                    <SubTree ID="moveTo3" />
+                    <SubTree ID="moveTo4" />
+                    <SubTree ID="moveTo5" />
+                    <SubTree ID="moveTo1" />
+                </Sequence>
+            </Plan>

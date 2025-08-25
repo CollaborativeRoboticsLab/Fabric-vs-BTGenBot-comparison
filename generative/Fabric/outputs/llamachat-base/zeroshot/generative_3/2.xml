@@ -1,0 +1,21 @@
+<Plan>
+            <Retry num_attempts='2' name='retry'>
+            <Sequence name='move back to origin'>
+            <MoveBase goal="0.0;0.0;0.0" />
+            </Sequence>
+            </Retry>
+            <Fallback name='move to specific locations'>
+            <Sequence name='move to (2.0, -0.5)'>
+            <MoveBase goal="2.0;-0.5;0.0" />
+            </Sequence>
+            <Sequence name='move to (1.0, 3.0)'>
+            <MoveBase goal="1.0;3.0;0.0" />
+            </Sequence>
+            <Sequence name='move to (-2.0, 0.0)'>
+            <MoveBase goal="-2.0;0.0;0.0" />
+            </Sequence>
+            <Sequence name='move to (0.0, -2.0)'>
+            <MoveBase goal="0.0;-2.0;0.0" />
+            </Sequence>
+            </Fallback>
+            </Plan>

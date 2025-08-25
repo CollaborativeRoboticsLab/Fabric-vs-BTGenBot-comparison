@@ -1,0 +1,8 @@
+<Plan ID="waitPlan">
+            <Fallback name="waitPlan">
+                <Action ID="waitFrames" name="waitFrames">
+                    <InputPort default="5" name="frames">frames</InputPort>
+                    <OutputPort name="waitFrames">waited frames</OutputPort>
+                </Action>
+            </Fallback>
+        </Plan>
