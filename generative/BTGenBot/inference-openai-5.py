@@ -9,7 +9,6 @@ MODEL = "gpt-5"  # You can switch to "gpt-4.1" or "o4-mini" if you have access
 
 # List of test files from tasks folder
 test_file_list = [
-    "original.txt",
     "generative_1.txt",
     "generative_2.txt",
     "generative_3.txt",
@@ -53,7 +52,7 @@ def generate_bt_with_openai(context: str, task: str, example_task: str | None = 
     resp = client.chat.completions.create(
         model=model,
         messages=messages,
-        temperature=0.2,
+        temperature=1,
     )
     print("Prompt used: ")
     print(messages)
@@ -82,7 +81,7 @@ for name in test_file_list:
         print(f"\nZero-shot OpenAI result (time: {end1 - start1:.2f} seconds):")
         print("Zero-shot OpenAI result:")
         print(result)
-        save_output_to_file("openai-{MODEL}", "zero", task_filename, it, result)
+        save_output_to_file(f"openai-{MODEL}", "zeroshot", task_filename, it, result)
 
         # Generate the behavior tree XML using OpenAI using the one-shot approach
         start2 = time.time()
@@ -91,4 +90,4 @@ for name in test_file_list:
         print(f"\nOne-shot OpenAI result (time: {end2 - start2:.2f} seconds):")
         print("One-shot OpenAI result:")
         print(result)
-        save_output_to_file("openai-{MODEL}", "one", task_filename, it, result)
+        save_output_to_file(f"openai-{MODEL}", "oneshot", task_filename, it, result)

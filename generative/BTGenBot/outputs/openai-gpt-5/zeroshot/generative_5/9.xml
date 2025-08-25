@@ -1,0 +1,22 @@
+<root main_tree_to_execute="MainTree">
+  <BehaviorTree ID="MainTree">
+    <Sequence name="VisitStationsInOrder">
+      <Fallback name="Reach_A_or_B">
+        <MoveTo destination="StationA"/>
+        <MoveTo destination="StationB"/>
+      </Fallback>
+      <Fallback name="Reach_E_or_B">
+        <MoveTo destination="StationE"/>
+        <MoveTo destination="StationB"/>
+      </Fallback>
+      <Fallback name="Reach_F_or_C">
+        <MoveTo destination="StationF"/>
+        <MoveTo destination="StationC"/>
+      </Fallback>
+      <Fallback name="Reach_D_or_C">
+        <MoveTo destination="StationD"/>
+        <MoveTo destination="StationC"/>
+      </Fallback>
+    </Sequence>
+  </BehaviorTree>
+</root>

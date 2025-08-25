@@ -9,7 +9,6 @@ MODEL = "gpt-4.1"  # You can switch to "gpt-4.1" or "o4-mini" if you have access
 
 # List of test files from tasks folder
 test_file_list = [
-    "original.txt",
     "generative_1.txt",
     "generative_2.txt",
     "generative_3.txt",
@@ -24,12 +23,7 @@ context2 =  """. Return only the xml plan without explanations or comments. The 
              authority such as an LLM to move the robot to a required position and orientation. This capability can be triggered via the xml command 
             '<Runner interface=capabilities2_runner_nav2/WaypointRunner provider=capabilities2_runner_nav2/WaypointRunner x='$value' y='$value' />'. '$value' represents a 
              value in meters. As an example '<Runner interface=capabilities2_runner_nav2/WaypointRunner provider=capabilities2_runner_nav2/WaypointRunner x='1.2' y='0.8' /> 
-             means the robot will move 1.2 meters forward and 0.8 meters to the right side. capability capabilities2_runner_nav2/RobotPoseRunner and 
-             capabilities2_runner_nav2/PromptPoseRunner can be used to get the feedback on the position of the robot and by that, whether the robot has reached the position 
-             or not. This capability requests to create a new plan at the end of an execution plan. This capability can be trigged with an xml command such as 
-             '<Runner interface=capabilities2_runner_prompt/PromptPlanRunner provider=capabilities2_runner_prompt/PromptPlanRunner replan=false task=$task/>'. This will prompt 
-             to create a new execution plan either to continue the current task or to focus on a new task given by $task value depending on the state of the robot. This 
-             capability needs to be in every execution plan created and needs be the capability before the last in any  plan. All plans need to be contained within 
+             means the robot will move 1.2 meters forward and 0.8 meters to the right side. All plans need to be contained within 
              <Plan> and </Plan> xml tags. <Control type= name=> </Control> dictates the control flow of the plan and has two attributes, type and name. The type attribute 
              can be one of the following values: sequential, parallel_any, parallel_all, recovery. The name attribute is optional and can be used to give a name to the 
              control flow. '<?xml version='1.0' encoding='UTF-8'?>' should be the first line of the xml file and it is not a part of the plan. Additionally the attribute 
@@ -42,16 +36,14 @@ context2 =  """. Return only the xml plan without explanations or comments. The 
              psudo-parallel. All children will execute until all capabilities finish before proceeding to execute the rest of the plan. 
              <Control type=recovery name=name_of_flow> </Control> will trigger children only on the immediate predecessor's failure. Capabilities within recovery control 
              flow will be executed sequentially on predecessors failure, until at least one capability finishes successfully, and then rest of the recovery capabilities 
-             will be skipped and the main plan will continue execution. Upon the completion of this capability, another capability need to be executed for verifying and 
-             starting the execution of the new plan via '<Runner interface=capabilities2_runner_prompt/FabricSetPlanRunner provider=capabilities2_runner_prompt/FabricSetPlanRunner/>' 
-             xml command. """
+             will be skipped and the main plan will continue execution."""
 
 # One-shot example
 example_task = """Following example plan shows how to navigate to a series of waypoints, specifically (5.0, 5.0), (2.0,2.0) and (3.0, 1.0) in order. And if the robot 
                 cannot reach point (5.0, 5.0) it can move to (0.0, 0.0) as a recovery measure.: """
 example_output = """
 '<?xml version='1.0' encoding='UTF-8'?>
-  <Plan name='navigate_or_return_fabric'>
+  <Plan>
       <Control type='sequential' name='main_execution_plan'>
       <Runner interface='capabilities2_runner_nav2/WaypointRunner' provider='capabilities2_runner_nav2/WaypointRunner' x='5.0' y='5.0' />
       <Control type='recovery' name='return_to_home_if_lost'>
@@ -113,7 +105,7 @@ for name in test_file_list:
         print(f"\nZero-shot OpenAI result (time: {end1 - start1:.2f} seconds):")
         print("Zero-shot OpenAI result:")
         print(result)
-        save_output_to_file("openai-{MODEL}", "zero", task_filename, it, result)
+        save_output_to_file(f"openai-{MODEL}", "zeroshot", task_filename, it, result)
 
         # Generate the behavior tree XML using OpenAI using the one-shot approach
         start2 = time.time()
@@ -122,4 +114,4 @@ for name in test_file_list:
         print(f"\nOne-shot OpenAI result (time: {end2 - start2:.2f} seconds):")
         print("One-shot OpenAI result:")
         print(result)
-        save_output_to_file("openai-{MODEL}", "one", task_filename, it, result)
+        save_output_to_file(f"openai-{MODEL}", "oneshot", task_filename, it, result)

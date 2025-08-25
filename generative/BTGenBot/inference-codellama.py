@@ -12,7 +12,6 @@ login(token=hf_token)
 
 # List of test files from tasks folder
 test_file_list = [
-    "original.txt",
     "generative_1.txt",
     "generative_2.txt",
     "generative_3.txt",
@@ -112,7 +111,7 @@ for name in test_file_list:
             print(f"\nZero-shot base model result (time: {end1 - start1:.2f} seconds):")
             print("Zero-shot base model result:")
             print(result)
-            save_output_to_file("codellama-base", "zero", task_filename, it, result)
+            save_output_to_file("codellama-base", "zeroshot", task_filename, it, result)
 
         ## Evaluate one-shot with base model
         with torch.no_grad():
@@ -122,7 +121,7 @@ for name in test_file_list:
             print(f"\nOne-shot base model result (time: {end2 - start2:.2f} seconds):")
             print("One-shot base model result:")
             print(result)
-            save_output_to_file("codellama-base", "one", task_filename, it, result)
+            save_output_to_file("codellama-base", "oneshot", task_filename, it, result)
 
         # Evaluate zero-shot with finetuned model
         with torch.no_grad():
@@ -132,7 +131,7 @@ for name in test_file_list:
             print(f"\nZero-shot finetuned model result (time: {end3 - start3:.2f} seconds):")
             print("Zero-shot finetuned model result:")
             print(result)
-            save_output_to_file("codellama-finetuned", "zero", task_filename, it, result)
+            save_output_to_file("codellama-finetuned", "zeroshot", task_filename, it, result)
 
         # Evaluate oneshot with finetuned model
         with torch.no_grad():
@@ -142,4 +141,4 @@ for name in test_file_list:
             print(f"\nOne-shot finetuned model result (time: {end4 - start4:.2f} seconds):")
             print("One-shot finetuned model result:")
             print(result)
-            save_output_to_file("codellama-finetuned", "one", task_filename, it, result)
+            save_output_to_file("codellama-finetuned", "oneshot", task_filename, it, result)

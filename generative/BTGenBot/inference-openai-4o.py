@@ -9,14 +9,12 @@ MODEL = "gpt-4o"  # You can switch to "gpt-4.1" or "o4-mini" if you have access
 
 # List of test files from tasks folder
 test_file_list = [
-    "original.txt",
     "generative_1.txt",
     "generative_2.txt",
     "generative_3.txt",
     "generative_4.txt",
     "generative_5.txt",
 ]
-
 # Define the context for the task
 context = "<<SYS>> You will be provided a summary of a task performed by a behavior tree, and your objective is to express this behavior tree in XML format.\n <</SYS>>"
 
@@ -82,7 +80,7 @@ for name in test_file_list:
         print(f"\nZero-shot OpenAI result (time: {end1 - start1:.2f} seconds):")
         print("Zero-shot OpenAI result:")
         print(result)
-        save_output_to_file("openai-{MODEL}", "zero", task_filename, it, result)
+        save_output_to_file(f"openai-{MODEL}", "zeroshot", task_filename, it, result)
 
         # Generate the behavior tree XML using OpenAI using the one-shot approach
         start2 = time.time()
@@ -91,4 +89,4 @@ for name in test_file_list:
         print(f"\nOne-shot OpenAI result (time: {end2 - start2:.2f} seconds):")
         print("One-shot OpenAI result:")
         print(result)
-        save_output_to_file("openai-{MODEL}", "one", task_filename, it, result)
+        save_output_to_file(f"openai-{MODEL}", "oneshot", task_filename, it, result)
