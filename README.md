@@ -33,21 +33,21 @@ cd BTGenBot
 To run the BT generation with llamachat
 ```bash
 export HF_TOKEN="your_hugging_face_token_here"
-python3 inference-llamachat.py
+python3 inference-llamachat.py >> logs/llamachat-rawlog.log
 ```
 
 To run the BT generation with codellama
 ```bash
 export HF_TOKEN="your_hugging_face_token_here"
-python3 inference-codellama.py
+python3 inference-codellama.py >> logs/codellama-rawlog.log
 ```
 
 To run the BT generation with openai models select the correct file
 ```bash
 export OPENAI_API_KEY="your_openai_key_here"
-python3 inference-openai-4o.py
-python3 inference-openai-4.1.py
-python3 inference-openai-5.py
+python3 inference-openai-4o.py >> logs/openai-4o-rawlog.log
+python3 inference-openai-4.1.py >> logs/openai-4.1-rawlog.log
+python3 inference-openai-5.py >> logs/openai-5-rawlog.log
 ```
 
 ### Fabric
@@ -60,21 +60,21 @@ cd Fabric
 To run the generation with llamachat
 ```bash
 export HF_TOKEN="your_hugging_face_token_here"
-python3 inference-llamachat.py
+python3 inference-llamachat.py >> logs/llamachat-rawlog.log
 ```
 
 To run the generation with codellama
 ```bash
 export HF_TOKEN="your_hugging_face_token_here"
-python3 inference-codellama.py
+python3 inference-codellama.py >> logs/codellama-rawlog.log
 ```
 
 To run the generation with openai
 ```bash
 export OPENAI_API_KEY="your_openai_key_here"
-python3 inference-openai-4o.py
-python3 inference-openai-4.1.py
-python3 inference-openai-5.0.py
+python3 inference-openai-4o.py >> logs/openai-4o-rawlog.log
+python3 inference-openai-4.1.py >> logs/openai-4.1-rawlog.log
+python3 inference-openai-5.py >> logs/openai-5-rawlog.log
 ```
 
 Prompts and results will be printed onto the terminal.

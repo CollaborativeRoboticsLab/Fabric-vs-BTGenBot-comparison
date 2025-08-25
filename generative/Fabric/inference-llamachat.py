@@ -50,7 +50,7 @@ base_model = AutoModelForCausalLM.from_pretrained(
 )
 
 # Define the context for the task
-context1 =  """Build a xml plan based on the availbale capabilities to acheive mentioned task of """
+context1 =  """<<SYS>>Build a xml plan based on the availbale capabilities to acheive mentioned task of <</SYS>> """
 context2 =  """. Return only the xml plan without explanations or comments. The capabilities of the robot are given as follows, This capability depends on the navigation
              stack functionalities and allow the robot to navigate to a location given by two dimensional coordinates. This capability can be used by the decision making
              authority such as an LLM to move the robot to a required position and orientation. This capability can be triggered via the xml command 
@@ -105,11 +105,11 @@ for name in test_file_list:
         task = file.read().strip()
 
    # zero-shot prompt
-    zero_eval_prompt = context1 + task + context2
+    zero_eval_prompt = context1 + "[INST]" + task + context2 + "[/INST]"
     zero_model_input = tokenizer(zero_eval_prompt, return_tensors="pt").to("cuda")
 
     # one-shot prompt
-    one_eval_prompt = context1 + task + context2 + example_task + example_output
+    one_eval_prompt = context1 + "[INST]" + task + context2 + example_task + "[/INST]" + example_output
     one_model_input = tokenizer(one_eval_prompt, return_tensors="pt").to("cuda")
 
     ## print task
