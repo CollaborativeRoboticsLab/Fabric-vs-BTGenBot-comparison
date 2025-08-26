@@ -1,62 +1,25 @@
-<Plan> <Sequence> <RetryUntilSuccesful numAttempts='2' name='move to (2.0, -0.5)'>
-            <Sequence name='move to (1.0, 3.0)'>
-                <Sequence name='move to (-3.0, -1.0)'>
-                    <Sequence name='move to (0.0, -2.0)'>
-                        <Sequence name='move to (-2.0, 0.0)'>
-                            <Sequence name='move to (2.0, 2.0)'>
-                            </Sequence>
-                        </Sequence>
-                    </Sequence>
-                </Sequence>
-            </Sequence>
-            <Sequence name='move to (1.0, 3.0)'>
-            </Sequence>
-            <Sequence name='move to (-3.0, -1.0)'>
-            </Sequence>
-            <Sequence name='move to (-2.0, 0.0)'>
-            </Sequence>
-            <Sequence name='move to (0.0, -2.0)'>
-            </Sequence>
-            <Sequence name='move to (2.0, 2.0)'>
-            </Sequence>
-            </RetryUntilSuccesful>
-        </Sequence>
-        <Sequence>
-            <SubPlan ID='move_to_0_0_-2_0'>
-                <SubPlan ID='move_to_2_0_0'>
-                    <SubPlan ID='move_to_0_0_-2_0'>
-                        <Sequence name='move to (0.0, -2.0)'>
-                            <Action ID='move_to' x='0.0' y='-2.0' />
-                        </Sequence>
-                    </SubPlan>
-                </SubPlan>
-            </SubPlan>
-            <SubPlan ID='move_to_2_0_3'>
-                <SubPlan ID='move_to_3_0_0'>
-                    <Sequence name='move to (3.0, 0.0)'>
-                        <Action ID='move_to' x='3.0' y='0.0' />
-                    </Sequence>
-                </SubPlan>
-            </SubPlan>
-            <SubPlan ID='move_to_0_0_-3_0'>
-                <Sequence name='move to (0.0, -3.0)'>
-                    <Action ID='move_to' x='0.0' y='-3.0' />
-                </Sequence>
-            </SubPlan>
-            <SubPlan ID='move_to_3_0_0'>
-                <Sequence name='move to (3.0, 0.0)'>
-                    <Action ID='move_to' x='3.0' y='0.0' />
-                </Sequence>
-            </SubPlan>
-            <SubPlan ID='move_to_2_0_0'>
-                <Sequence name='move to (2.0, 0.0)'>
-                    <Action ID='move_to' x='2.0' y='0.0' />
-                </Sequence>
-            </SubPlan>
-            <SubPlan ID='move_to_0_0_-2_0'>
-                <Sequence name='move to (0.0, -2.0)'>
-                    <Action ID='move_to' x='0.0' y='-2.0' />
-                </Sequence>
-            </SubPlan>
+<Plan ID="MainTree">
+        <Sequence name="move_to_coords">
+            <!-- If (2.0, -0.5) cannot be reached -->
+            <Fallback name="move_to_coords_fallback">
+                <!-- If (1.0, 3.0) cannot be reached -->
+                <Fallback name="move_to_coords_fallback_2">
+                    <!-- If (-3.0, -1.0) cannot be reached -->
+                    <Fallback name="move_to_coords_fallback_3">
+                        <!-- If (0.0, -2.0) cannot be reached -->
+                        <MoveBase distance="5.0"/>
+                    </Fallback>
+                </Fallback>
+                <!-- If (0.0, 2.0) cannot be reached -->
+                <MoveBase distance="5.0"/>
+            </Fallback>
+            <!-- If (2.0, -0.5) can be reached -->
+            <MoveBase distance="2.0"/>
+            <!-- If (1.0, 3.0) can be reached -->
+            <MoveBase distance="3.0"/>
+            <!-- If (-3.0, -1.0) can be reached -->
+            <MoveBase distance="-3.0"/>
+            <!-- If (0.0, -2.0) can be reached -->
+            <MoveBase distance="-2.0"/>
         </Sequence>
     </Plan>

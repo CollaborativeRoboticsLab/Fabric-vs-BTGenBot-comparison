@@ -1,8 +1,8 @@
-<Plan ID="moveToLocations">
-            <Sequence>
-                <SubTree ID="moveToLocation-1" location="(2.0, -0.5)" />
-                <SubTree ID="moveToLocation-2" location="(0.0, 2.0)" />
-                <SubTree ID="moveToLocation-3" location="(0.0, -2.0)" />
-                <SubTree ID="moveToLocation-4" location="(0.0, -2.0)" />
-            </Sequence>
-            </Plan>
+<Plan ID="MainTree">
+    <Sequence>
+      <MoveBase goal="2.0;-0.5"/>
+      <MoveBase goal="0.0;2.0"/>
+      <MoveBase goal="-2.0;0.0"/>
+      <MoveBase goal="0.0;-2.0"/>
+    </Sequence>
+  </Plan>

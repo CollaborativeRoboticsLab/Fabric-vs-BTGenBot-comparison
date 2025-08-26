@@ -1,1 +1,5 @@
-<Plan> and </Plan>
+<Plan ID="MoveToPosition">
+        <Sequence name="move to position">
+            <Nav2Client goal="{target}" />
+        </Sequence>
+    </Plan>

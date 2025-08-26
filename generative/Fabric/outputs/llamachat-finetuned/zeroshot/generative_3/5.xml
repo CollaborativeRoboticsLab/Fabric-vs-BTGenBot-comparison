@@ -1,27 +1,18 @@
-<Plan ID="movePlan">
-                <Sequence>
-                    <RecoveryNode numberOfRetries="1" name="moveRecovery">
-                        <Sequence name="moveTo2">
-                            <Sequence name="moveTo3">
-                                <Sequence name="moveTo4">
-                                    <Sequence name="moveTo5">
-                                        <SequenceStar name="moveTo6">
-                                            <Sequence>
-                                                <SubTree ID="moveTo7" node="2.0,-0.5" />
-                                            </Sequence>
-                                        </SequenceStar>
-                                    </Sequence>
-                                </Sequence>
-                            </Sequence>
-                        </Sequence>
-                    </RecoveryNode>
-                    <Sequence>
-                        <Sequence name="moveTo8">
-                            <SubTree ID="moveTo9" node="1.0,3.0" />
-                        </Sequence>
-                    </Sequence>
-                    <Sequence>
-                        <SubTree ID="moveTo10" node="0.0,-2.0" />
-                    </Sequence>
-                </Sequence>
-            </Plan>
+<Plan ID="MainTree">
+    <Sequence>
+      <RetryUntilSuccesful num_attempts="6" name="move to specific locations">
+        <Sequence name="move to (2.0, -0.5)">
+          <MoveBase goal="2.0;-0.5"/>
+        </Sequence>
+        <Sequence name="move to (1.0, 3.0)">
+          <MoveBase goal="1.0;3.0"/>
+        </Sequence>
+        <Sequence name="move to (-2.0, 0.0)">
+          <MoveBase goal="-2.0;0.0"/>
+        </Sequence>
+        <Sequence name="move to (0.0, -2.0)">
+          <MoveBase goal="0.0;-2.0"/>
+        </Sequence>
+      </RetryUntilSuccesful>
+    </Sequence>
+  </Plan>

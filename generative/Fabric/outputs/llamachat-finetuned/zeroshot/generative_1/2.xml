@@ -1,17 +1,7 @@
-<Plan>
-                    <Control type=sequential name=name_of_flow>
-                            <Capability2-Name provider="capabilities2_runner_nav2" name="move to (2.0, -0.5) position"/>
-                    </Control>
-                    <Control type=parallel_any name=name_of_flow>
-                            <Capability2-Name provider="capabilities2_runner_nav2" name="move to (2.0, 0.8) position"/>
-                    </Control>
-                    <Control type=recovery name=name_of_flow>
-                            <Capability2-Name provider="capabilities2_runner_nav2" name="move to (2.0, -0.5) position"/>
-                    </Control>
-                    <Control type=recovery name=name_of_flow>
-                            <Capability2-Name provider="capabilities2_runner_nav2" name="move to (2.0, 0.8) position"/>
-                    </Control>
-                    <Control type=fallback name="name_of_flow">
-                            <AlwaysSuccess/>
-                    </Control>
-                </Plan>
+<Plan ID="MainTree">
+    <Control 
+      type="navigation2_controller" 
+      name="name_of_flow" 
+      goal_position="2.0;-0.5" >
+    </Control>
+  </Plan>

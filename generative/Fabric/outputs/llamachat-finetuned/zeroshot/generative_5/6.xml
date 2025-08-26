@@ -1,10 +1,37 @@
-<Plan>
+<Plan ID="MainTree">
+        <Sequence>
+            <!-- Check each waypoint and move the robot if it cannot reach the current one -->
+            <Fallback>
                 <Sequence>
-                    <RetryUntilSuccesful numAttempts="20" untilSuccesful=""/>
-                    <SubTree ID="moveTo2" />
-                    <SubTree ID="moveTo3" />
-                    <SubTree ID="moveTo4" />
-                    <SubTree ID="moveTo5" />
-                    <SubTree ID="moveTo1" />
+                    <CheckBlackboard input="move_goal" ID="MoveGoalCheck" />
+                    <Sequence>
+                        <Nav2AroundGoal goal="move_goal" ID="Nav2AroundGoal" />
+                    </Sequence>
                 </Sequence>
-            </Plan>
+                <Sequence>
+                    <CheckBlackboard input="move_goal" ID="MoveGoalCheck" />
+                    <Sequence>
+                        <Nav2Move goal="-3.0,-1.0" ID="Nav2Move" />
+                    </Sequence>
+                </Sequence>
+            </Fallback>
+            <Sequence>
+                <CheckBlackboard input="move_goal" ID="MoveGoalCheck" />
+                <Sequence>
+                    <Nav2Move goal="0.0,-2.0" ID="Nav2Move" />
+                </Sequence>
+            </Sequence>
+            <Sequence>
+                <CheckBlackboard input="move_goal" ID="MoveGoalCheck" />
+                <Sequence>
+                    <Nav2Move goal="1.0,3.0" ID="Nav2Move" />
+                </Sequence>
+            </Sequence>
+            <Sequence>
+                <CheckBlackboard input="move_goal" ID="MoveGoalCheck" />
+                <Sequence>
+                    <Nav2Move goal="-2.0,0.0" ID="Nav2Move" />
+                </Sequence>
+            </Sequence>
+        </Sequence>
+    </Plan>

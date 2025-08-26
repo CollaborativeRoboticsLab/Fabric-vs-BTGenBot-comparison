@@ -1,3 +1,10 @@
-<Plan ID="move_to_waypoint8">
-             <Action ID="7" name="move_base" node="move" x="${wp.x}" y="${wp.y}"/>
-             </Plan>
+<Plan ID="MainTree">
+    <Control type="sequential" name="name_of_flow">
+      <Sequence name="Sequence1">
+        <MoveBase goal="2.0;-0.5"/>
+        <MoveBase goal="0.0;2.0"/>
+        <MoveBase goal="-2.0;0.0"/>
+        <MoveBase goal="0.0;-2.0"/>
+      </Sequence>
+    </Control>
+  </Plan>
