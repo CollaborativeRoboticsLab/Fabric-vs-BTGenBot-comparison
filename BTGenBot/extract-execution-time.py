@@ -67,6 +67,9 @@ RESULT_LINE_RE = re.compile(
     + r")\s*\(time:\s*([\d.]+)\s*seconds\):\s*$"
 )
 
+TASK_LINE_RE = re.compile(r"^Running inference on task file:\s*(generative_\d+\.txt)")
+
+
 # -----------------------------
 # File IO helpers
 # -----------------------------
@@ -85,25 +88,34 @@ def write_csv(path: Path, rows: List[List[str]]) -> None:
 # Parsing / extraction
 # -----------------------------
 
-def extract_blocks(log_text: str) -> Dict[int, List[str]]:
-    blocks: Dict[int, List[str]] = {}
+def extract_blocks(log_text: str) -> Dict[str, Dict[int, List[str]]]:
+    task_blocks: Dict[str, Dict[int, List[str]]] = {}
+    current_task: str | None = None
     current_it: int | None = None
 
     for raw in log_text.splitlines():
         line = raw.rstrip()
 
-        m_it = ITERATION_RE.match(line)
-        if m_it:
-            current_it = int(m_it.group(1))
-            blocks[current_it] = [line]
+        # Detect new task
+        m_task = TASK_LINE_RE.match(line)
+        if m_task:
+            current_task = m_task.group(1).replace(".txt", "")  # e.g., generative_1
+            task_blocks[current_task] = {}
+            current_it = None
             continue
 
-        if current_it is not None and any(line.startswith(lbl) for lbl in MODEL_LABELS):
-            blocks[current_it].append(line)
+        m_it = ITERATION_RE.match(line)
+        if m_it:
+            if current_task is None:
+                continue  # ignore iterations outside tasks
+            current_it = int(m_it.group(1))
+            task_blocks[current_task][current_it] = [line]
+            continue
 
-    # Remove the 1-10 clamp if you want all iterations
-    return blocks
+        if current_task and current_it is not None and any(line.startswith(lbl) for lbl in MODEL_LABELS):
+            task_blocks[current_task][current_it].append(line)
 
+    return task_blocks
 def parse_times(blocks: Dict[int, List[str]]) -> Dict[str, Dict[int, float]]:
     results: Dict[str, Dict[int, float]] = {}
     for it, lines in blocks.items():
@@ -120,16 +132,19 @@ def parse_times(blocks: Dict[int, List[str]]) -> Dict[str, Dict[int, float]]:
 # Formatting for outputs
 # -----------------------------
 
-def format_blocks_as_text(blocks: Dict[int, List[str]]) -> str:
+def format_task_blocks_as_text(task_blocks: Dict[str, Dict[int, List[str]]]) -> str:
     parts: List[str] = []
-    for it in sorted(blocks):
-        # Only include lines with timing info or the iteration header
-        filtered = [
-            line for line in blocks[it]
-            if line.startswith("Iteration") or RESULT_LINE_RE.match(line)
-        ]
-        parts.append("\n".join(filtered))
-    return "\n\n".join(parts) + ("\n" if parts else "")
+    for task, blocks in task_blocks.items():
+        parts.append(f"Running inference on task file: {task}.txt")
+        for it in sorted(blocks):
+            filtered = [
+                line for line in blocks[it]
+                if line.startswith("Iteration") or RESULT_LINE_RE.match(line)
+            ]
+            parts.append("\n".join(filtered))
+        parts.append("")  # add spacing between tasks
+    return "\n\n".join(parts)
+
 
 def make_iteration_headers(all_iterations: List[int]) -> List[str]:
     return [f"Itr{it}" for it in all_iterations]
@@ -138,23 +153,18 @@ def make_iteration_headers(all_iterations: List[int]) -> List[str]:
 # Row building (combined CSV)
 # -----------------------------
 
-def rows_for_file(
-    file_name: str,
-    times_by_label: Dict[str, Dict[int, float]],
-    all_iterations: List[int]
-) -> List[List[str]]:
+def rows_for_file(task_name: str, file_name: str, times_by_label: Dict[str, Dict[int, float]], all_iterations: List[int]) -> List[List[str]]:
     model = MODEL_NAME_MAP[file_name]
     is_gpt = IS_GPT[file_name]
     rows: List[List[str]] = []
 
-    # Only output rows for labels that actually have data
     for label in MODEL_LABELS:
-        if not times_by_label.get(label):  # skip if no data for this label
+        if not times_by_label.get(label):
             continue
         version, prompt = LABEL_TO_VERSION_PROMPT[label]
         version_out = "n/a" if is_gpt else version
 
-        row = [model, version_out, prompt]
+        row = [task_name, model, version_out, prompt]
         for it in all_iterations:
             val = times_by_label.get(label, {}).get(it, "")
             row.append(f"{val}" if val != "" else "")
@@ -166,45 +176,52 @@ def rows_for_file(
 # Orchestration
 # -----------------------------
 
-def process_one_log(file_name: str) -> Tuple[Dict[str, Dict[int, float]], Dict[int, List[str]]]:
+def process_one_log(file_name: str) -> Tuple[Dict[str, Dict[str, Dict[int, float]]], Dict[str, Dict[int, List[str]]]]:
     p = Path("logs/" + file_name)
     if not p.exists():
-        return ({lbl: {} for lbl in MODEL_LABELS}, {})
+        return ({}, {})
 
     text = read_text(p)
-    blocks = extract_blocks(text)
-    times = parse_times(blocks)
-    return (times, blocks)
+    task_blocks = extract_blocks(text)
+    task_times: Dict[str, Dict[str, Dict[int, float]]] = {}
+
+    for task, blocks in task_blocks.items():
+        task_times[task] = parse_times(blocks)
+
+    return (task_times, task_blocks)
+
 
 def main() -> None:
     out_dir = Path("timing_data")
     out_dir.mkdir(exist_ok=True)
 
-    per_file_times: Dict[str, Dict[str, Dict[int, float]]] = {}
-    per_file_blocks: Dict[str, Dict[int, List[str]]] = {}
+    all_iterations_set = set()
+    all_rows: List[List[str]] = []
+
+    per_file_task_blocks: Dict[str, Dict[str, Dict[int, List[str]]]] = {}
 
     for fname in LOG_FILES:
-        times, blocks = process_one_log(fname)
-        per_file_times[fname] = times
-        per_file_blocks[fname] = blocks
+        task_times_dict, task_blocks_dict = process_one_log(fname)
+        per_file_task_blocks[fname] = task_blocks_dict
 
-        # Write per-file extracted text to timing_data/
+        # Save extracted.txt
         out_txt = out_dir / (Path(fname).stem + ".extracted.txt")
-        write_text(out_txt, format_blocks_as_text(blocks))
+        write_text(out_txt, format_task_blocks_as_text(task_blocks_dict))
 
-    # Collect all iteration indices across files to form CSV headers
-    all_iterations_sorted = sorted({
-        it for blocks in per_file_blocks.values() for it in blocks.keys()
-    })
+        for task, blocks in task_blocks_dict.items():
+            all_iterations_set.update(blocks.keys())
 
-    header = ["Model", "Version", "Prompt"] + make_iteration_headers(all_iterations_sorted)
-    rows: List[List[str]] = [header]
+    all_iterations_sorted = sorted(all_iterations_set)
+    header = ["Task", "Model", "Version", "Prompt"] + make_iteration_headers(all_iterations_sorted)
+    all_rows.append(header)
 
     for fname in LOG_FILES:
-        rows.extend(rows_for_file(fname, per_file_times[fname], all_iterations_sorted))
+        task_times_dict, _ = process_one_log(fname)
+        for task_name, times in task_times_dict.items():
+            all_rows.extend(rows_for_file(task_name, fname, times, all_iterations_sorted))
 
-    # Write combined CSV to timing_data/
-    write_csv(out_dir / "iteration_times_all.csv", rows)
+    write_csv(out_dir / "iteration_times_all.csv", all_rows)
+
 
 if __name__ == "__main__":
     main()
