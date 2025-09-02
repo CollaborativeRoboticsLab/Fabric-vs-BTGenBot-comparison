@@ -19,13 +19,18 @@ test_file_list = [
 context = "<<SYS>> You will be provided a summary of a task performed by a behavior tree, and your objective is to express this behavior tree in XML format.\n <</SYS>>"
 
 # One-shot example
-example_task = """The behavior tree represents a robot's navigation system with arm activity. The robot must visit the location "Station A", then follow the aruco with ID=7. The only available actions that must be used in the behavior tree are: "MoveTo", "FollowAruco"."""
+example_task = """The behavior tree represents a robot's navigation system with arm activity. The robot must visit the locations "Station A", "Station B", "Station C". 
+                  If "Station A" is not reachable, move to "Station D". The only available actions that must be used in the behavior tree are: "MoveTo"."""
 example_output = """
-<root main_tree_to_execute = "MainTree" >
-    <BehaviorTree ID="MainTree">
+<root BTCPP_format="4">
+    <BehaviorTree>
         <Sequence>
-            <MoveTo location="Station A"/>
-            <FollowAruco id="7"/>
+            <Fallback>
+                <MoveTo name="go_to_station_A" location="Station A"/>      <!-- move to Station A -->
+                <MoveTo name="go_to_station_D" location="Station D"/>      <!-- move to Station D -->
+            </Fallback>
+            <MoveTo name="go_to_station_B" location="Station B"/>      <!-- move to Station B -->
+            <MoveTo name="go_to_station_C" location="Station C"/>      <!-- move to Station C -->
         </Sequence>
     </BehaviorTree>
 </root>
