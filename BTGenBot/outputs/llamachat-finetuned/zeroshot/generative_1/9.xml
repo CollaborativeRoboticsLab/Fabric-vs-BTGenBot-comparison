@@ -1,8 +1,0 @@
-<root main_tree_to_execute = "MainTree">
-    <BehaviorTree ID="MainTree">
-        <Sequence>
-            <FindPoseAction  name="FindPose" location="StationA" />
-            <MoveToAction    name="MoveTo" goal="{pose}" />
-        </Sequence>
-    </BehaviorTree>
-</root>
