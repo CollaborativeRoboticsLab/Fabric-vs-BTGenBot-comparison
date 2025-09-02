@@ -1,0 +1,39 @@
+Iteration 1 on openai-gpt-4.1:
+Zero-shot OpenAI result (time: 3.17 seconds):
+One-shot OpenAI result (time: 3.25 seconds):
+
+Iteration 2 on openai-gpt-4.1:
+Zero-shot OpenAI result (time: 4.64 seconds):
+One-shot OpenAI result (time: 2.74 seconds):
+
+Iteration 3 on openai-gpt-4.1:
+Zero-shot OpenAI result (time: 2.77 seconds):
+One-shot OpenAI result (time: 2.58 seconds):
+
+Iteration 4 on openai-gpt-4.1:
+Zero-shot OpenAI result (time: 3.98 seconds):
+One-shot OpenAI result (time: 3.38 seconds):
+
+Iteration 5 on openai-gpt-4.1:
+Zero-shot OpenAI result (time: 2.87 seconds):
+One-shot OpenAI result (time: 2.81 seconds):
+
+Iteration 6 on openai-gpt-4.1:
+Zero-shot OpenAI result (time: 2.71 seconds):
+One-shot OpenAI result (time: 2.77 seconds):
+
+Iteration 7 on openai-gpt-4.1:
+Zero-shot OpenAI result (time: 3.18 seconds):
+One-shot OpenAI result (time: 2.66 seconds):
+
+Iteration 8 on openai-gpt-4.1:
+Zero-shot OpenAI result (time: 3.68 seconds):
+One-shot OpenAI result (time: 3.48 seconds):
+
+Iteration 9 on openai-gpt-4.1:
+Zero-shot OpenAI result (time: 2.98 seconds):
+One-shot OpenAI result (time: 2.65 seconds):
+
+Iteration 10 on openai-gpt-4.1:
+Zero-shot OpenAI result (time: 3.80 seconds):
+One-shot OpenAI result (time: 3.47 seconds):

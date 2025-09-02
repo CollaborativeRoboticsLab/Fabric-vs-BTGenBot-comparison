@@ -1,0 +1,59 @@
+Iteration 1 on llamachat:
+Zero-shot base model result (time: 13.36 seconds):
+One-shot base model result (time: 87.69 seconds):
+Zero-shot finetuned model result (time: 24.45 seconds):
+One-shot finetuned model result (time: 23.97 seconds):
+
+Iteration 2 on llamachat:
+Zero-shot base model result (time: 35.60 seconds):
+One-shot base model result (time: 21.73 seconds):
+Zero-shot finetuned model result (time: 60.66 seconds):
+One-shot finetuned model result (time: 43.38 seconds):
+
+Iteration 3 on llamachat:
+Zero-shot base model result (time: 28.80 seconds):
+One-shot base model result (time: 31.08 seconds):
+Zero-shot finetuned model result (time: 32.79 seconds):
+One-shot finetuned model result (time: 19.62 seconds):
+
+Iteration 4 on llamachat:
+Zero-shot base model result (time: 29.45 seconds):
+One-shot base model result (time: 22.41 seconds):
+Zero-shot finetuned model result (time: 37.07 seconds):
+One-shot finetuned model result (time: 23.43 seconds):
+
+Iteration 5 on llamachat:
+Zero-shot base model result (time: 87.94 seconds):
+One-shot base model result (time: 7.13 seconds):
+Zero-shot finetuned model result (time: 88.33 seconds):
+One-shot finetuned model result (time: 27.46 seconds):
+
+Iteration 6 on llamachat:
+Zero-shot base model result (time: 21.87 seconds):
+One-shot base model result (time: 21.79 seconds):
+Zero-shot finetuned model result (time: 21.69 seconds):
+One-shot finetuned model result (time: 21.88 seconds):
+
+Iteration 7 on llamachat:
+Zero-shot base model result (time: 22.70 seconds):
+One-shot base model result (time: 27.99 seconds):
+Zero-shot finetuned model result (time: 26.86 seconds):
+One-shot finetuned model result (time: 34.05 seconds):
+
+Iteration 8 on llamachat:
+Zero-shot base model result (time: 13.35 seconds):
+One-shot base model result (time: 6.95 seconds):
+Zero-shot finetuned model result (time: 35.53 seconds):
+One-shot finetuned model result (time: 6.95 seconds):
+
+Iteration 9 on llamachat:
+Zero-shot base model result (time: 48.98 seconds):
+One-shot base model result (time: 24.67 seconds):
+Zero-shot finetuned model result (time: 16.40 seconds):
+One-shot finetuned model result (time: 32.63 seconds):
+
+Iteration 10 on llamachat:
+Zero-shot base model result (time: 90.58 seconds):
+One-shot base model result (time: 7.02 seconds):
+Zero-shot finetuned model result (time: 35.09 seconds):
+One-shot finetuned model result (time: 25.00 seconds):

@@ -1,0 +1,59 @@
+Iteration 1:
+Zero-shot base model result (time: 47.51 seconds):
+One-shot base model result (time: 32.84 seconds):
+Zero-shot finetuned model result (time: 47.67 seconds):
+One-shot finetuned model result (time: 32.82 seconds):
+
+Iteration 2:
+Zero-shot base model result (time: 47.64 seconds):
+One-shot base model result (time: 32.85 seconds):
+Zero-shot finetuned model result (time: 47.42 seconds):
+One-shot finetuned model result (time: 32.67 seconds):
+
+Iteration 3:
+Zero-shot base model result (time: 49.19 seconds):
+One-shot base model result (time: 32.97 seconds):
+Zero-shot finetuned model result (time: 47.15 seconds):
+One-shot finetuned model result (time: 32.52 seconds):
+
+Iteration 4:
+Zero-shot base model result (time: 46.99 seconds):
+One-shot base model result (time: 32.37 seconds):
+Zero-shot finetuned model result (time: 47.12 seconds):
+One-shot finetuned model result (time: 32.38 seconds):
+
+Iteration 5:
+Zero-shot base model result (time: 46.98 seconds):
+One-shot base model result (time: 32.54 seconds):
+Zero-shot finetuned model result (time: 46.90 seconds):
+One-shot finetuned model result (time: 32.57 seconds):
+
+Iteration 6:
+Zero-shot base model result (time: 49.35 seconds):
+One-shot base model result (time: 33.10 seconds):
+Zero-shot finetuned model result (time: 46.81 seconds):
+One-shot finetuned model result (time: 33.18 seconds):
+
+Iteration 7:
+Zero-shot base model result (time: 48.90 seconds):
+One-shot base model result (time: 32.59 seconds):
+Zero-shot finetuned model result (time: 47.57 seconds):
+One-shot finetuned model result (time: 32.23 seconds):
+
+Iteration 8:
+Zero-shot base model result (time: 46.60 seconds):
+One-shot base model result (time: 32.32 seconds):
+Zero-shot finetuned model result (time: 46.62 seconds):
+One-shot finetuned model result (time: 32.25 seconds):
+
+Iteration 9:
+Zero-shot base model result (time: 48.55 seconds):
+One-shot base model result (time: 32.61 seconds):
+Zero-shot finetuned model result (time: 47.04 seconds):
+One-shot finetuned model result (time: 32.61 seconds):
+
+Iteration 10:
+Zero-shot base model result (time: 47.17 seconds):
+One-shot base model result (time: 32.58 seconds):
+Zero-shot finetuned model result (time: 47.12 seconds):
+One-shot finetuned model result (time: 33.25 seconds):

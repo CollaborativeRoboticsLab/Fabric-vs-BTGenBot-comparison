@@ -39,6 +39,8 @@ MODEL_LABELS: Tuple[str, ...] = (
     "One-shot base model result",
     "Zero-shot finetuned model result",
     "One-shot finetuned model result",
+    "Zero-shot OpenAI result",
+    "One-shot OpenAI result",
 )
 
 # Map labels to (version, prompt)
@@ -47,15 +49,20 @@ LABEL_TO_VERSION_PROMPT = {
     "One-shot base model result": ("base", "one"),
     "Zero-shot finetuned model result": ("finetuned", "zero"),
     "One-shot finetuned model result": ("finetuned", "one"),
+    "Zero-shot OpenAI result": ("n/a", "zero"),
+    "One-shot OpenAI result": ("n/a", "one"),
 }
+
 
 # -----------------------------
 # Regex
 # -----------------------------
 
-ITERATION_RE = re.compile(r"(?m)^\s*Iteration\s+(\d+)\s*:\s*$")
+ITERATION_RE = re.compile(r"^\s*Iteration\s+(\d+)(?:\s+on\s+[\w\-\.]+)?:\s*$")
+
+# Matches all result lines
 RESULT_LINE_RE = re.compile(
-    r"^(?:"
+    r"^\s*("
     + "|".join(map(re.escape, MODEL_LABELS))
     + r")\s*\(time:\s*([\d.]+)\s*seconds\):\s*$"
 )
@@ -88,23 +95,25 @@ def extract_blocks(log_text: str) -> Dict[int, List[str]]:
         m_it = ITERATION_RE.match(line)
         if m_it:
             current_it = int(m_it.group(1))
-            blocks[current_it] = [f"Iteration {current_it}:"]
+            blocks[current_it] = [line]
             continue
 
         if current_it is not None and any(line.startswith(lbl) for lbl in MODEL_LABELS):
             blocks[current_it].append(line)
 
-    return {k: v for k, v in blocks.items() if 1 <= k <= 10}
+    # Remove the 1-10 clamp if you want all iterations
+    return blocks
 
 def parse_times(blocks: Dict[int, List[str]]) -> Dict[str, Dict[int, float]]:
-    results: Dict[str, Dict[int, float]] = {lbl: {} for lbl in MODEL_LABELS}
+    results: Dict[str, Dict[int, float]] = {}
     for it, lines in blocks.items():
         for line in lines:
             m = RESULT_LINE_RE.match(line)
             if m:
-                label = next((lbl for lbl in MODEL_LABELS if line.startswith(lbl)), None)
-                if label:
-                    results[label][it] = float(m.group(1))
+                label = m.group(1)
+                if label not in results:
+                    results[label] = {}
+                results[label][it] = float(m.group(2))
     return results
 
 # -----------------------------
@@ -114,7 +123,12 @@ def parse_times(blocks: Dict[int, List[str]]) -> Dict[str, Dict[int, float]]:
 def format_blocks_as_text(blocks: Dict[int, List[str]]) -> str:
     parts: List[str] = []
     for it in sorted(blocks):
-        parts.append("\n".join(blocks[it]))
+        # Only include lines with timing info or the iteration header
+        filtered = [
+            line for line in blocks[it]
+            if line.startswith("Iteration") or RESULT_LINE_RE.match(line)
+        ]
+        parts.append("\n".join(filtered))
     return "\n\n".join(parts) + ("\n" if parts else "")
 
 def make_iteration_headers(all_iterations: List[int]) -> List[str]:
@@ -133,7 +147,10 @@ def rows_for_file(
     is_gpt = IS_GPT[file_name]
     rows: List[List[str]] = []
 
+    # Only output rows for labels that actually have data
     for label in MODEL_LABELS:
+        if not times_by_label.get(label):  # skip if no data for this label
+            continue
         version, prompt = LABEL_TO_VERSION_PROMPT[label]
         version_out = "n/a" if is_gpt else version
 
@@ -150,7 +167,7 @@ def rows_for_file(
 # -----------------------------
 
 def process_one_log(file_name: str) -> Tuple[Dict[str, Dict[int, float]], Dict[int, List[str]]]:
-    p = Path(file_name)
+    p = Path("logs/" + file_name)
     if not p.exists():
         return ({lbl: {} for lbl in MODEL_LABELS}, {})
 
