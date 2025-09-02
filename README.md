@@ -81,9 +81,25 @@ Prompts and results will be printed onto the terminal.
 
 Data used for evaluation will be available on output-eval and logs-eval folders
 
-## Evaluation 
+## Evaluation
 
-### Criteria
+### Extract execution times
+
+Run the following files to extract timing data as txt and csv files.
+
+Fabric
+```bash
+cd Fabric
+python3 extract-execution-time.py
+```
+
+BTGenBot
+```bash
+cd BTGenBot
+python3 extract-execution-time.py
+```
+
+### Plan Eval Criteria
 
 Current Evaluations were done by 3 human evaluators who follows the below scoring approach and attempted to
 score related to next sections ideal results.
