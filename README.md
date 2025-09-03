@@ -1,16 +1,31 @@
 # ICRA 2026 Fabric vs BTGenBot comparison
 
+This packacge contains the experiments designed and executed to compare the generative properties of the Fabric against BTGenBot.
+
+To maintain similarity between the experiments, prompts of the Fabric has been simplified to focus just on the waypoint navigation and
+prompts of BTGenBot has been improved with more complex examples (with recovery functions) for oneshot prompts.
+
+To setup Fabric please follow instructions in [CollaborativeRoboticsLab/fabric](https://github.com/CollaborativeRoboticsLab/fabric)
+To setup Capabilities2 please follow instructions in [CollaborativeRoboticsLab/capabilities2](https://github.com/CollaborativeRoboticsLab/capabilities2)
+
+Original BTGenBot is available in [AIRLab-POLIMI/BTGenBot](https://github.com/AIRLab-POLIMI/BTGenBot)
+An updated version with ros2 humble support and detailed setup instructions can be found in [KalanaRatnayake/BTGenBot](https://github.com/KalanaRatnayake/BTGenBot)
+
 ## Setup
 
-Create a python virtual environment
+Clone this repo
+```bash
+git clone https://github.com/CollaborativeRoboticsLab/ICRA-2026-Fabric-vs-BTGenBot-comparison
+```
 
+Create a python virtual environment
 ```bash 
+cd ICRA-2026-Fabric-vs-BTGenBot-comparison
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
 Install Dependencies
-
 ```bash
 pip install -r requirements.txt
 ```
@@ -21,30 +36,47 @@ Activate the venv
 ```bash
 source .venv/bin/activate
 ```
-Following commands will run the code for each of the tasks available in the tasks folder and write the corresponding plan to workspace/src/bt_client/bt_xml folder with filename format of `<model>-<zero>-<original_filename>-<iteration>.xml`
+Following commands will run the code for each of the tasks available in the respective tasks folders and create files in the sub
+directories within `Fabric` and `BTGenBot`
 
-### BT
+- `logs` folder will contain log files for each execution 
+- `outputs` folder will contain execution plans in different subdirectories based on the model, prompt type
+- `timing_data` contains extracted time information for each run. To generate this data, please see following section called **Extract execution times**
+- `runnable` contains plans identified as complete and executable by the evaluation team.
 
-Move in to the BTGenBot folder
+### Pre-requisites
+
+To run these experiments, the user need to complete following pre-requisites.
+
+- Huggingface API Key - create a account with HuggingFace and follow instructions [Official](https://huggingface.co/docs/hub/en/security-tokens), [3rd Party](https://www.nightfall.ai/ai-security-101/hugging-face-api-key), [Video](https://www.youtube.com/watch?v=aCYSpo-8ijI)
+- OpenAI api key - Create an account with OpenAI and follow instructions [Settings](https://platform.openai.com/api-keys), [Video](https://www.youtube.com/watch?v=SzPE_AE0eEo), [3rd-Party](https://medium.com/@lorenzozar/how-to-get-your-own-openai-api-key-f4d44e60c327)
+- Request access to LLama's gated Models [here](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf)
+- A computer with a GPU of at least 16GB. The llamachat and codellama models downloads and runs locally.
+
+
+### BTGenBot Experiments
+
+To run the experiments move into the BTGenBot folder
 ```bash
 cd BTGenBot
 ```
 
-To run the BT generation with llamachat
+To run the BT generation with llamachat, run the following command. It will prompt for the Huggingface api key, enter the key once prompted. And press enter.
+There will also be a prompt asking `Add token as git credential? (Y/n)` which is hidden due to we writing the log into a file. Press `n` in empty terminal and press enter to proceed. This will timeout as well. This can be seen by opening the `BTGenBot/logs/llamachat-rawlog.log`
+
 ```bash
-export HF_TOKEN="your_hugging_face_token_here"
 python3 inference-llamachat.py >> logs/llamachat-rawlog.log
 ```
 
-To run the BT generation with codellama
+To run the BT generation with codellama follow the above mentioned steps again
 ```bash
-export HF_TOKEN="your_hugging_face_token_here"
 python3 inference-codellama.py >> logs/codellama-rawlog.log
 ```
 
-To run the BT generation with openai models select the correct file
+To run the BT generation with openai models, export your openai api key as shown bellow. replace `<your_openai_key_here>` eith the actual api key.
+select the required file or run each consectively.
 ```bash
-export OPENAI_API_KEY="your_openai_key_here"
+export OPENAI_API_KEY=<your_openai_key_here>
 python3 inference-openai-4o.py >> logs/openai-4o-rawlog.log
 python3 inference-openai-4.1.py >> logs/openai-4.1-rawlog.log
 python3 inference-openai-5.py >> logs/openai-5-rawlog.log
@@ -52,66 +84,79 @@ python3 inference-openai-5.py >> logs/openai-5-rawlog.log
 
 ### Fabric
 
-Move in to the Fabric folder
+To run the experiments move in to the Fabric folder
 ```bash
 cd Fabric
 ```
 
-To run the generation with llamachat
+To run the generation with llamachat, run the following command. It will prompt for the Huggingface api key, enter the key once prompted. And press enter.
+There will also be a prompt asking `Add token as git credential? (Y/n)` which is hidden due to we writing the log into a file. Press `n` in empty terminal and press enter to proceed. This will timeout as well. This can be seen by opening the `BTGenBot/logs/llamachat-rawlog.log`
+
 ```bash
-export HF_TOKEN="your_hugging_face_token_here"
 python3 inference-llamachat.py >> logs/llamachat-rawlog.log
 ```
 
-To run the generation with codellama
+To run the generation with codellama follow the above mentioned steps again
 ```bash
-export HF_TOKEN="your_hugging_face_token_here"
 python3 inference-codellama.py >> logs/codellama-rawlog.log
 ```
 
-To run the generation with openai
+To run the generation with openai, export your openai api key as shown bellow. replace `<your_openai_key_here>` eith the actual api key.
+select the required file or run each consectively
 ```bash
-export OPENAI_API_KEY="your_openai_key_here"
+export OPENAI_API_KEY=<your_openai_key_here>
 python3 inference-openai-4o.py >> logs/openai-4o-rawlog.log
 python3 inference-openai-4.1.py >> logs/openai-4.1-rawlog.log
 python3 inference-openai-5.py >> logs/openai-5-rawlog.log
 ```
 
-Prompts and results will be printed onto the terminal.
-
-Data used for evaluation will be available on output-eval and logs-eval folders
-
 ## Evaluation
 
 ### Extract execution times
 
-Run the following files to extract timing data as txt and csv files.
+Run the following files to extract timing data as text and csv files.
 
-Fabric
+For Fabric
 ```bash
 cd Fabric
 python3 extract-execution-time.py
 ```
 
-BTGenBot
+For BTGenBot
 ```bash
 cd BTGenBot
 python3 extract-execution-time.py
 ```
 
-### Plan Eval Criteria
+The values over all the experiments were analyzed and are available in the 
+`results.pdf` under **Time Comparison**
 
-Current Evaluations were done by 3 human evaluators who follows the below scoring approach and attempted to
+### Evaluate Execution Plans
+
+Execution Plan Evaluations were done by 3 human evaluators who follows the below scoring approach and attempted to
 score related to next sections ideal results.
 
 ![Scoring Image](./docs/scoring.png)
 
-Once the scoring was done by each individual, the data was aggregated to reduce the semantics that can occur 
-due to human nature. Then the results were condensed as shown in the above image.
+- Score X is for instances where the result was corrupted. These only occured in oneshot prompting and contained the example plan used in oneshot prompt
+
+- Score 0 is when the xml file was not generated. In this scenarios, a incomplete plan can be seen in the log file. But mainly it lacks `<root></root>` tags in BTGenBot and `<Plan></Plan>` in Fabric which is used to extract the plan from the text.
+
+- Score 1 is when either xml file exist but the content is missing or both xml syntax wrong and theoretical approach in the plan is wrong.
+
+- Score 2 is when xml syntax (xml element names, xml attribute names) are wrong but the theoretical approach (logic, xml attribute values) are  correct.
+
+- Score 3 is when xml syntax (xml element names, xml attribute names) are correct but the theoretical approach (logic, xml attribute values) are  wrong.
+
+- Score 4 is when xml syntax (xml element names, xml attribute names) are correct and the theoretical approach (logic, xml attribute values) are  correct.
+
+- Score 5 is when plan can be run on the simulation.
+
+Once the scoring was done by each individual independently, the results were condensed into `failed`, `partial` and `success` as shown in the above image. Finally the results of the 3 evaluations was aggregated to reduce the human error. The `failed`, `partial` and `success` percentages are are available in the `results.pdf` under **Plan Comparison**
 
 ### Ideal results
 
-Tasks are available in `BTGenBot/tasks/` and `Fabric/tasks` folders
+Following are the ideal execution plans for the asks are available in `BTGenBot/tasks/` and `Fabric/tasks` folders
 
 #### Task 1 (Generative 1)
 
