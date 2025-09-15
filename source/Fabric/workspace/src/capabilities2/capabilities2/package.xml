@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>capabilities2</name>
+  <version>0.0.1</version>
+  <description>
+    meta-package for the capabilities2 interface
+  </description>
+
+  <license>MIT</license>
+
+  <url type="repository">https://github.com/AIResearchLab/capabilities2</url>
+
+  <exec_depend>capabilities2_msgs</exec_depend>
+  <exec_depend>capabilities2_server</exec_depend>
+  <exec_depend>capabilities2_runner</exec_depend>
+  <exec_depend>capabilities2_launch_proxy</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

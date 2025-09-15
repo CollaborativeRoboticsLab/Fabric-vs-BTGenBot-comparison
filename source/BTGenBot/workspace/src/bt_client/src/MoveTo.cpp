@@ -1,0 +1,78 @@
+/**
+ * @file MoveTo.cpp
+ * @author Riccardo Andrea Izzo (riccardo.izzo@mail.polimi.it)
+ * @version 0.1
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
+
+#include "MoveTo.hpp"
+
+MoveTo::MoveTo(const std::string &name,
+               const NodeConfig &conf,
+               const RosNodeParams &params)
+    : RosActionNode<nav2_msgs::action::NavigateToPose>(name, conf, params)
+{
+    client = params.nh.lock();
+}
+
+PortsList MoveTo::providedPorts()
+{
+    return {
+        BT::InputPort<std::string>("location"),
+    };
+}
+
+bool MoveTo::setGoal(RosActionNode::Goal &goal)
+{
+    // Retrieve the location from the input port
+    std::string loc;
+
+    if (!getInput("location", loc))
+    {
+        if (auto node = node_.lock())
+            RCLCPP_ERROR(node->get_logger(), "Input port 'location' not provided");
+        else
+            RCLCPP_ERROR(rclcpp::get_logger("MoveTo"), "Input port 'location' not provided");
+        return false;
+    }
+
+    // Load the YAML file containing location information
+    const std::string file_path = client->get_parameter("location_file").as_string();
+    YAML::Node locations = YAML::LoadFile(file_path);
+    // Extract the coordinates for the specified location
+    std::vector<float> current_goal = locations[loc].as<std::vector<float>>();
+    // Set the goal for the action
+    goal.pose.header.stamp = client->now();
+    goal.pose.header.frame_id = "map";
+
+    goal.pose.pose.position.x = current_goal[0];
+    goal.pose.pose.position.y = current_goal[1];
+    goal.pose.pose.orientation.x = 0.0;
+    goal.pose.pose.orientation.y = 0.0;
+    goal.pose.pose.orientation.w = 1.0;
+    goal.pose.pose.orientation.z = 0.0;
+
+    return true;
+}
+
+NodeStatus MoveTo::onResultReceived(const RosActionNode::WrappedResult &wr)
+{
+    RCLCPP_INFO(client->get_logger(), "Goal reached\n");
+    return NodeStatus::SUCCESS;
+}
+
+NodeStatus MoveTo::onFailure(ActionNodeErrorCode error)
+{
+    if (auto node = node_.lock())
+        RCLCPP_ERROR(node->get_logger(), "Error: %d", error);
+    else
+        RCLCPP_ERROR(rclcpp::get_logger("MoveTo"), "Error: %d (node expired)", error);
+    return NodeStatus::FAILURE;
+}
+
+NodeStatus MoveTo::onFeedback(const std::shared_ptr<const Feedback> feedback)
+{
+    return NodeStatus::RUNNING;
+}

@@ -1,0 +1,43 @@
+## PromptCapabilityRunner Example
+
+### Plan selection
+
+Uncomment the  line related to `prompt_1.xml` in the `config/fabric.yaml` file
+
+### Build the package to apply changes
+
+In the workspace root run,
+
+```bash
+colcon build
+```
+
+### Start the Prompt Tools stack
+
+```bash
+source install/setup.bash
+ros2 launch prompt_bridge prompt_bridge.launch.py
+```
+
+### Start the Capabilities2 Server
+
+```bash
+source install/setup.bash
+ros2 launch capabilities2_server server.launch.py
+```
+
+### Start the Fabric
+
+```bash
+source install/setup.bash
+ros2 launch fabric fabric.launch.py
+```
+
+### Start the logging (Optional)
+
+for on-device/terminal logging
+
+```bash
+source install/setup.bash
+ros2 launch event_logger listener.launch.py
+```

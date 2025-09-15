@@ -1,22 +1,19 @@
 # ICRA 2026 Fabric vs BTGenBot comparison
 
-This packacge contains the experiments designed and executed to compare the generative properties of the Fabric against BTGenBot.
+This repository contains the experiments designed and executed to compare the generative properties of the Fabric against BTGenBot.
 
 To maintain similarity between the experiments, prompts of the Fabric has been simplified to focus just on the waypoint navigation and
 prompts of BTGenBot has been improved with more complex examples (with recovery functions) for oneshot prompts.
 
-To setup Fabric please follow instructions in [CollaborativeRoboticsLab/fabric](https://github.com/CollaborativeRoboticsLab/fabric)
-To setup Capabilities2 please follow instructions in [CollaborativeRoboticsLab/capabilities2](https://github.com/CollaborativeRoboticsLab/capabilities2)
+To setup Fabric please follow instructions in [source/Fabric/fabric](./source/Fabric/workspace/src/fabric/readme.md)
+To setup Capabilities2 please follow instructions in [source/Fabric/capabilities2](./source/Fabric/workspace/src/capabilities2/readme.md)
 
 Original BTGenBot is available in [AIRLab-POLIMI/BTGenBot](https://github.com/AIRLab-POLIMI/BTGenBot)
-An updated version with ros2 humble support and detailed setup instructions can be found in [KalanaRatnayake/BTGenBot](https://github.com/KalanaRatnayake/BTGenBot)
+An updated version with ros2 humble support and detailed setup instructions can be found in [source/BTGenBot](./source/BTGenBot/README.md)
 
 ## Setup
 
 Clone this repo
-```bash
-git clone https://github.com/CollaborativeRoboticsLab/ICRA-2026-Fabric-vs-BTGenBot-comparison
-```
 
 Create a python virtual environment
 ```bash 
@@ -149,8 +146,6 @@ score related to next sections ideal results.
 - Score 3 is when xml syntax (xml element names, xml attribute names) are correct but the theoretical approach (logic, xml attribute values) are  wrong.
 
 - Score 4 is when xml syntax (xml element names, xml attribute names) are correct and the theoretical approach (logic, xml attribute values) are  correct.
-
-- Score 5 is when plan can be run on the simulation.
 
 Once the scoring was done by each individual independently, the results were condensed into `failed`, `partial` and `success` as shown in the above image. Finally the results of the 3 evaluations was aggregated to reduce the human error. The `failed`, `partial` and `success` percentages are are available in the `results.pdf` under **Plan Comparison**
 

@@ -1,0 +1,8 @@
+%YAML 1.1
+---
+name: FabricCompletionRunner
+spec_type: provider
+spec_version: 1.1
+description: "The capability provider for the /fabric/set_completion interface"
+implements: capabilities2_runner_fabric/FabricCompletionRunner
+runner: capabilities2_runner::FabricCompletionRunner

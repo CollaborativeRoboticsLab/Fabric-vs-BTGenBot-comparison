@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>prompt_tools</name>
+  <version>0.0.1</version>
+  <description>meta-package with tools for working with prompted systems such as large language models and their responses</description>
+
+  <license>MIT</license>
+
+  <exec_depend>prompt_msgs</exec_depend>
+  <exec_depend>prompt_bridge</exec_depend>
+  <exec_depend>prompt_openai</exec_depend>
+  <exec_depend>prompt_ollama</exec_depend>
+  <exec_depend>prompt_base</exec_depend>
+  <exec_depend>prompt_huggingface</exec_depend>
+  <exec_depend>prompt_transcriber</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>capabilities2_runner</name>
+  <version>0.0.1</version>
+  <description>
+    Package for capabilities2 runners, managed running different types of capabilities
+  </description>
+
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>pluginlib</depend>
+  <depend>std_msgs</depend>
+  <depend>capabilities2_msgs</depend>
+  <depend>capabilities2_utils</depend>
+  <depend>event_logger</depend>
+  <depend>event_logger_msgs</depend>
+  <depend>tinyxml2_vendor</depend>
+
+  <!-- system dependency -->
+  <depend>uuid</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
