@@ -2,9 +2,8 @@
 
 ROS2 meta-package with tools for working with prompted systems such as large language models and their responses in a distributed data driven robotic system application (ROS) including generic ROS message types for LLM prompts.
 
-This package contain two main components as,
-- [prompt_bridge](./prompt_bridge/readme.md) 
-- prompt_planner (experimental)
+This package contain one main component,
+- [prompt_bridge](./prompt_bridge/readme.md)
 
 ## Prompt Bridge
 
