@@ -6,7 +6,7 @@ ROS package for bridging between prompted systems such as large language models 
 
 ## Motivation
 
-This package is part of a proposed ROS REP. Following the principle design purpose of ROS itself - to stop reinventing the wheel - this package aims to provide a generic interface for prompted systems such as large language models (LLMs) to be used in a ROS robotic system application. The package provides a ROS resource interface and plugin architecture much like other packages such as the navigation stack for LLM prompts and different LLM providers. This package contains a bridge node to connect prompted systems to ROS.
+This package is part of a proposed ROS REP (TBC). Following the principle design purpose of ROS itself - to stop reinventing the wheel - this package aims to provide a generic interface for prompted systems such as large language models (LLMs) to be used in a ROS robotic system application. The package provides a ROS resource interface and plugin architecture much like other packages such as the navigation stack for LLM prompts and different LLM providers. This package contains a bridge node to connect prompted systems to ROS.
 
 ## API
 
