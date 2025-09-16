@@ -34,7 +34,7 @@ Finally start the capabilities2 server. Run the following on a new terminal
 ```bash
 source install/setup.bash
 ros2 launch fabric fabric.launch.py
-```
+```w
 
 ## More information
 
