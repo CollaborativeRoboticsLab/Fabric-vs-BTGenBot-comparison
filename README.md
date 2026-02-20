@@ -1,4 +1,4 @@
-# ICRA 2026 Fabric vs BTGenBot comparison
+# Fabric vs BTGenBot comparison
 
 This repository contains the experiments designed and executed to compare the generative properties of the Fabric against BTGenBot.
 
