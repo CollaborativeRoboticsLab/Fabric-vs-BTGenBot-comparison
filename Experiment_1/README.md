@@ -2,8 +2,8 @@
 
 To maintain similarity between the tests, prompts of the Fabric has been simplified to focus just on the waypoint navigation and prompts of BTGenBot has been improved with more complex examples (with recovery functions) for oneshot prompts.
 
-To setup Fabric please follow instructions in [Experiment_1/source/Fabric/fabric](./Experiment_1/source/Fabric/workspace/src/fabric/readme.md)
-To setup Capabilities2 please follow instructions in [Experiment_1/source/Fabric/capabilities2](./Experiment_1/source/Fabric/workspace/src/capabilities2/readme.md)
+To setup Fabric follow instructions in [Experiment_1/source/Fabric/fabric](./source/Fabric/workspace/src/fabric/readme.md)
+To setup Capabilities2 follow instructions in [Experiment_1/source/Fabric/capabilities2](./source/Fabric/workspace/src/capabilities2/readme.md)
 
 Original BTGenBot is available in [AIRLab-POLIMI/BTGenBot](https://github.com/AIRLab-POLIMI/BTGenBot)
 An updated version with ros2 humble support and detailed setup instructions can be found in [Experiment_1/source/BTGenBot](./Experiment_1/source/BTGenBot/README.md)

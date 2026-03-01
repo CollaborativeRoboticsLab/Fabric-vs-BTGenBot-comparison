@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>capabilities2_runner</name>
+  <version>0.2.0</version>
+  <description>
+    Package for capabilities2 runners, plugin base classes, system-level and capability specific runner plugins
+  </description>
+  
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>pluginlib</depend>
+  <depend>std_msgs</depend>
+  <depend>capabilities2_msgs</depend>
+  <depend>capabilities2_events</depend>
+
+  <depend>tinyxml2_vendor</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+
+    <!-- InputMultiplexRunner -->
+    <capability_interface>
+      interfaces/InputMultiplexRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/InputMultiplexRunner.yaml
+    </capability_provider>
+
+    <!-- GetCapabilitySpecsRunner -->
+    <capability_interface>
+      interfaces/GetCapabilitySpecsRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/GetCapabilitySpecsRunner.yaml
+    </capability_provider>
+  </export>
+</package>

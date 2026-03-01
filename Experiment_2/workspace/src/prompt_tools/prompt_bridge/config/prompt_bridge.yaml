@@ -1,0 +1,82 @@
+# config for prompt_bridge
+/**:
+  ros__parameters:
+    frame_id: prompt_bridge
+    cached_transactions: 10
+
+    prompt_family_names: [openai, ollama]
+    prompt_family_plugins:
+      openai: prompt::OpenAIProvider
+      ollama: prompt::OllamaProvider
+
+    embedding_family_names: [openai]
+    embedding_family_plugins:
+      openai: prompt::OpenAIEmbedding
+
+    tokenizer_family_names: [openai]
+    tokenizer_family_plugins:
+      openai: prompt::OpenAITokenize
+
+    OpenAIProvider:
+      rest:
+        # OpenAI Responses API endpoint (used for both single prompts and conversations)
+        uri: https://api.openai.com/v1/responses
+        chat_uri: https://api.openai.com/v1/responses
+        method: POST
+        auth_type: Bearer
+        ssl_verify: true
+      option_keys: [stream, model] # options will be used if model options are not set in the prompt requests
+      options:
+        stream:
+          value: false
+          type: bool
+        model:
+          value: gpt-5    # e.g., gpt-4o, gpt-4.1, gpt-4o-mini
+          type: string
+
+    OpenAIEmbedding:
+      rest:
+        # OpenAI embedding API endpoint
+        embedding_uri: https://api.openai.com/v1/embeddings
+        method: POST
+        auth_type: Bearer
+        ssl_verify: true
+      option_keys: [model, dimensions, encoding_format] # options will be used if model options are not set in the prompt requests
+      options:
+        model:
+          value: text-embedding-3-small    # e.g., text-embedding-3-small, text-embedding-3-large
+          type: string
+        dimensions:
+          value: 1536   # Default values: 1536 for text-embedding-3-small, 3072 for text-embedding-3-large
+                        # but can be overridden based on the model used, gen 3 models can shorten dimensions
+          type: int
+        encoding_format:
+          value: float   # e.g., float, base64
+          type: string
+
+    OpenAITokenize:
+      option_keys: [model] # options will be used if model options are not set in the prompt requests
+      options:
+        model:
+          value: O200K_BASE    # e.g., gpt-4o, gpt-4.1, gpt-4o-mini
+          type: string
+
+    OllamaProvider:
+      rest:
+        uri: http://10.0.0.246:11434/api/generate    # local ollama container
+        chat_uri: http://10.0.0.246:11434/api/chat          # local ollama container
+        # uri: http://ollama:11434/api/generate      # docker container with name 'ollama' running on the same computer
+        # chat_uri: http://ollama:11434/api/generate        # docker container with name 'ollama' running on the same computer
+        # uri: http://ollama:11434/v1/completions    # docker container with name 'ollama' and openai api compat version
+        # chat_uri: http://ollama:11434/v1/completions      # docker container with name 'ollama' and openai api compat version
+        method: POST
+        auth_type: Bearer
+        ssl_verify: false
+      option_keys: [stream, model] # options will be used if model options are not set in the prompt requests
+      options:
+        stream:
+          value: false
+          type: bool
+        model:
+          value: llama3.2
+          type: string

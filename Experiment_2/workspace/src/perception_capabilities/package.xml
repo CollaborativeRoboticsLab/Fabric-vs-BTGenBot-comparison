@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>perception_capabilites</name>
+  <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  <license>TODO: License declaration</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>pluginlib</depend>
+  <depend>perception_msgs</depend>
+  <depend>capabilities2_msgs</depend>
+  <depend>capabilities2_runner</depend>
+  <depend>capabilities2_events</depend>
+  <depend>tinyxml2_vendor</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+
+    <!-- TranscribeRunner -->
+    <capability_interface>
+      interfaces/TranscribeRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/TranscribeRunner.yaml
+    </capability_provider>
+
+    <!-- SpeechRunner -->
+    <capability_interface>
+      interfaces/SpeechRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/SpeechRunner.yaml
+    </capability_provider>
+
+    <!-- SentimentRunner -->
+    <capability_interface>
+      interfaces/SentimentRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/SentimentRunner.yaml
+    </capability_provider>
+
+    <!-- ImageAnalysisRunner -->
+    <capability_interface>
+      interfaces/ImageAnalysisRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/ImageAnalysisRunner.yaml
+    </capability_provider>
+
+  </export>
+</package>

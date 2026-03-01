@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>capabilities2</name>
+  <version>0.2.0</version>
+  <description>
+    meta-package for the capabilities2 framework
+  </description>
+  
+  <license>MIT</license>
+
+  <exec_depend>capabilities2_msgs</exec_depend>
+  <exec_depend>capabilities2_events</exec_depend>
+  <exec_depend>capabilities2_runner</exec_depend>
+  <exec_depend>capabilities2_server</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

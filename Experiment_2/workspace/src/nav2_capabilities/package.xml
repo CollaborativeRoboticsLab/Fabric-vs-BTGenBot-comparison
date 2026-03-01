@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>nav2_capabilities</name>
+  <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>pluginlib</depend>
+  <depend>std_msgs</depend>
+  <depend>nav2_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>capabilities2_msgs</depend>
+  <depend>capabilities2_runner</depend>
+  <depend>capabilities2_events</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+
+    <!-- WaypointRunner -->
+    <capability_interface>
+      interfaces/WaypointRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/WaypointRunner.yaml
+    </capability_provider>
+
+    <!-- RobotPoseRunner -->
+    <capability_interface>
+      interfaces/RobotPoseRunner.yaml
+    </capability_interface>
+
+    <capability_provider>
+      providers/RobotPoseRunner.yaml
+    </capability_provider>
+
+    <!-- Nav2LaunchRunner -->
+    <!-- <capability_interface>
+      interfaces/Nav2LaunchRunner.yaml
+    </capability_interface> -->
+
+    <!-- <capability_provider>
+      providers/Nav2LaunchRunner.yaml
+    </capability_provider> -->
+
+
+  </export>
+</package>

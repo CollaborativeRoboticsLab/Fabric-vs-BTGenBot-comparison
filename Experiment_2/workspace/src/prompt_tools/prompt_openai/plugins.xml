@@ -1,0 +1,17 @@
+<library path="prompt_openai">
+  <class type="prompt::OpenAIProvider" base_class_type="prompt::BaseClass">
+    <description>
+      A plugin that provides a REST-based prompt provider for OpenAI API endpoints.
+    </description>
+  </class>
+  <class type="prompt::OpenAIEmbedding" base_class_type="prompt::BaseClass">
+    <description>
+      A plugin that provides a REST-based embedding provider for OpenAI API endpoints.
+    </description>
+  </class>
+  <class type="prompt::OpenAITokenize" base_class_type="prompt::BaseClass">
+    <description>
+      A plugin that provides a REST-based tokenize provider for OpenAI API endpoints.
+    </description>
+  </class>
+</library>
