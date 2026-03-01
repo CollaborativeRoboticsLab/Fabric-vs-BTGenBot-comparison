@@ -122,9 +122,6 @@ cd BTGenBot
 python3 extract-execution-time.py
 ```
 
-The values over all the experiments were analyzed and are available in the 
-`results.pdf` under **Time Comparison**
-
 ### Evaluate Execution Plans
 
 Execution Plan Evaluations were done by 3 human evaluators who follows the below scoring approach and attempted to
@@ -144,7 +141,7 @@ score related to next sections ideal results.
 
 - Score 4 is when xml syntax (xml element names, xml attribute names) are correct and the theoretical approach (logic, xml attribute values) are  correct.
 
-Once the scoring was done by each individual independently, the results were condensed into `failed`, `partial` and `success` as shown in the above image. Finally the results of the 3 evaluations was aggregated to reduce the human error. The `failed`, `partial` and `success` percentages are are available in the `results.pdf` under **Plan Comparison**
+Once the scoring was done by each individual independently, the results were condensed into `failed`, `partial` and `success` as shown in the above image. Finally the results of the 3 evaluations was aggregated to reduce the human error.
 
 ### Ideal results
 
